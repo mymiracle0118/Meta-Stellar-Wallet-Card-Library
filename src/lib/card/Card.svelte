@@ -1,58 +1,51 @@
 <script lang="ts">
-	import { onDestroy} from 'svelte';
-	import type { HTMLAnchorAttributes } from 'svelte/elements';
+	import { onDestroy, type ComponentProps} from 'svelte';
+	import {Card} from "flowbite-svelte";
+	import type {MouseTrackDataType} from '$lib/types.js';
 
-	import {} from 'svelte';
-
-	import Axios from 'axios'
-
-	interface $$Props extends HTMLAnchorAttributes {
-		isMouseTrackRecord?: boolean;
-		dataURL?: string;
-		intervalData?: number;
-	}
-	
 	// defined whether mouse track is recorded or not
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
 
-	let _intervalId: any;
+	interface $$Props extends ComponentProps<Card> {
+    isMouseTrackRecord?: boolean;
+		dataURL?: string;
+		intervalData?: number;
+  }
 
-	type MouseTrackDataType = {
-		point: { x: number; y: number };
-		timestamp: number;
-	};
-	let _mouseTrackData: MouseTrackDataType[] = [];
+	let intervalId: any;
 
-	let _timer = 0;
-	$: if (isMouseTrackRecord && intervalData != undefined && _timer != 0 && (_timer % intervalData == 0)) {
-		console.log('call request send function');
+	let mouseTrackData: MouseTrackDataType[] = [];
+
+	let countTime = 0;
+	$: if (isMouseTrackRecord && intervalData != undefined && countTime != 0 && (countTime % intervalData == 0)) {
 		sendMouseTrackData();
 	}
 
-	const clearMouseTrackData = () => {
-		_mouseTrackData = [];
+	function clearMouseTrackData() {
+		mouseTrackData = [];
 	};
 
-	const getCurrentTimeStamp = (): number => {
+	function getCurrentTimeStamp(): number {
 		const dNow = new Date();
-		return dNow.valueOf(); // 1673445066359
+		return dNow.valueOf(); 
 	};
 
-	const sendMouseTrackData = async () => {
-		if (dataURL == undefined || _mouseTrackData.length == 0) return;
-		
+	async function sendMouseTrackData () {
+		if (dataURL == undefined || mouseTrackData.length == 0) return;
+
 		try {
-			console.log('dataURL', dataURL);
-			const res = await Axios.post(dataURL, {
-				data: _mouseTrackData
+			console.log('mouse movement track data', mouseTrackData);
+			const body = {data: JSON.stringify(mouseTrackData)};
+			const res = await fetch(dataURL, {
+				method:'post',
+				body: JSON.stringify(body)
 			});
-			
+			console.log(res);
 			clearMouseTrackData();
 		} catch (e) {
 			console.log('request error', e);
-			clearMouseTrackData();
 		}
 	};
 
@@ -64,36 +57,18 @@
 		timestamp: getCurrentTimeStamp()
 	};
 
-	const getDistance = ({
-		oldData,
-		newData
-	}: {
-		oldData: MouseTrackDataType;
-		newData: MouseTrackDataType;
-	}): number => {
+	function  getDistance ({oldData,newData}: {oldData: MouseTrackDataType,newData: MouseTrackDataType;}): number {
 		return Math.sqrt(
 			Math.pow(Math.abs(oldData.point.x - newData.point.x), 2) +
 				Math.pow(Math.abs(oldData.point.y - newData.point.y), 2)
 		);
 	};
 
-	const getTimeInterval = ({
-		oldData,
-		newData
-	}: {
-		oldData: MouseTrackDataType;
-		newData: MouseTrackDataType;
-	}) => {
+	function getTimeInterval( {oldData,newData }: {oldData: MouseTrackDataType, newData: MouseTrackDataType;}):number {
 		return newData.timestamp - oldData.timestamp;
 	};
 
-	const recordMouseTrack = (
-		oldData: MouseTrackDataType,
-		event: MouseEvent,
-		distanceThreshold: number,
-		timeThreshold: number,
-		recordingFlag: boolean
-	): MouseTrackDataType => {
+	function recordMouseTrack ( oldData: MouseTrackDataType, event: MouseEvent, distanceThreshold: number, timeThreshold: number, recordingFlag: boolean) {
 		if (recordingFlag) {
 			const newData = {
 				point: {
@@ -107,8 +82,8 @@
 			const timeInterval = getTimeInterval({ oldData, newData });
 
 			if (distance >= distanceThreshold && timeInterval > timeThreshold) {
-				_mouseTrackData = [
-					..._mouseTrackData,
+				mouseTrackData = [
+					...mouseTrackData,
 					{
 						point: newData.point,
 						timestamp: timeInterval
@@ -120,48 +95,47 @@
 		return oldData;
 	};
 
-	function handleMouseMove(event: MouseEvent): void {
-		if (isMouseTrackRecord) {
-			const temp = recordMouseTrack(oldData, event, 10, 500, true);
-			oldData = { point: temp.point, timestamp: temp.timestamp };
-		}
+	function handleMouseMove(event: Event) {
+		 if (event instanceof MouseEvent && isMouseTrackRecord) {
+        const mouseEvent = event as MouseEvent;
+
+        const temp = recordMouseTrack(oldData, mouseEvent, 10, 500, true);
+        oldData = { point: temp.point, timestamp: temp.timestamp };
+    }
 	}
 
-	const handleMouseEnter = () => {
+	function handleMouseEnter() {
+		console.log('start recording of mouse movement track.')
 		if (isMouseTrackRecord && intervalData && intervalData > 0) {
-			_intervalId = setInterval(() => {
-				_timer++;
-				console.log('timer', _timer);
-				console.log('_mouseTrackData', _mouseTrackData);
+			intervalId = setInterval(() => {
+				countTime++;
 			}, 1000);
 		}
 	};
 
-	const init = () => {
-		
-		if (_intervalId != null) {
-			console.log('clear interval when init');
-			clearInterval(_intervalId);
-		}
-		if (isMouseTrackRecord) {
-			console.log('send mouse track when init');
-			sendMouseTrackData();
+	function _clearInterval() {
+		if (intervalId != null) {
+			clearInterval(intervalId);
+			countTime = 0;
 		}
 	}
 
-	const handleMouseLeave = () => {
-		init();
+	function handleMouseLeave () {
+		console.log('stop recording of mouse movement track when is out of card.');
+		_clearInterval()
 	};
 
 	onDestroy(() => {
-		init();
+		console.log('stop recording of mouse movement track  when is destroyed.');
+		_clearInterval();
+		if (isMouseTrackRecord) {
+			sendMouseTrackData();
+		}
 	});
 </script>
-
-<svelte:element this="div" 
-  on:click  
-  on:mouseenter={handleMouseEnter} 
-  on:mousemove={handleMouseMove}
-  on:mouseleave={handleMouseLeave}>
-	  <slot />
-</svelte:element>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="inline-block"  on:mousemove={handleMouseMove}>
+	<Card  {...$$restProps} on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} >
+			<slot />
+	</Card>
+</div>
