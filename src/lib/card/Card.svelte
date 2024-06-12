@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { onDestroy, onMount, type ComponentProps} from 'svelte';
+	import { onDestroy, type ComponentProps} from 'svelte';
 	import {Card} from "flowbite-svelte";
-	import {} from 'svelte';
-
-	import Axios from 'axios'
+	import type {MouseTrackDataType} from '$lib/types.js';
 
 	// defined whether mouse track is recorded or not
 	export let isMouseTrackRecord: boolean = false;
@@ -16,42 +14,38 @@
 		intervalData?: number;
   }
 
-	let _intervalId: any;
+	let intervalId: any;
 
-	type MouseTrackDataType = {
-		point: { x: number; y: number };
-		timestamp: number;
-	};
-	let _mouseTrackData: MouseTrackDataType[] = [];
+	let mouseTrackData: MouseTrackDataType[] = [];
 
-	let _timer = 0;
-	$: if (isMouseTrackRecord && intervalData != undefined && _timer != 0 && (_timer % intervalData == 0)) {
+	let countTime = 0;
+	$: if (isMouseTrackRecord && intervalData != undefined && countTime != 0 && (countTime % intervalData == 0)) {
 		sendMouseTrackData();
 	}
 
 	function clearMouseTrackData() {
-		_mouseTrackData = [];
+		mouseTrackData = [];
 	};
 
 	function getCurrentTimeStamp(): number {
 		const dNow = new Date();
-		return dNow.valueOf(); // 1673445066359
+		return dNow.valueOf(); 
 	};
 
 	async function sendMouseTrackData () {
-		if (dataURL == undefined || _mouseTrackData.length == 0) return;
-		console.log('_mouseTrackData', _mouseTrackData);
+		if (dataURL == undefined || mouseTrackData.length == 0) return;
+
 		try {
-			console.log('dataURL', dataURL);
-			console.log('data', _mouseTrackData);
-			const res = await Axios.post(dataURL, {
-				data: _mouseTrackData
+			console.log('mouse movement track data', mouseTrackData);
+			const body = {data: JSON.stringify(mouseTrackData)};
+			const res = await fetch(dataURL, {
+				method:'post',
+				body: JSON.stringify(body)
 			});
-			
+			console.log(res);
 			clearMouseTrackData();
 		} catch (e) {
 			console.log('request error', e);
-			clearMouseTrackData();
 		}
 	};
 
@@ -88,8 +82,8 @@
 			const timeInterval = getTimeInterval({ oldData, newData });
 
 			if (distance >= distanceThreshold && timeInterval > timeThreshold) {
-				_mouseTrackData = [
-					..._mouseTrackData,
+				mouseTrackData = [
+					...mouseTrackData,
 					{
 						point: newData.point,
 						timestamp: timeInterval
@@ -104,43 +98,44 @@
 	function handleMouseMove(event: Event) {
 		 if (event instanceof MouseEvent && isMouseTrackRecord) {
         const mouseEvent = event as MouseEvent;
+
         const temp = recordMouseTrack(oldData, mouseEvent, 10, 500, true);
         oldData = { point: temp.point, timestamp: temp.timestamp };
     }
 	}
 
 	function handleMouseEnter() {
+		console.log('start recording of mouse movement track.')
 		if (isMouseTrackRecord && intervalData && intervalData > 0) {
-			_intervalId = setInterval(() => {
-				_timer++;
-				console.log('timer', _timer);
+			intervalId = setInterval(() => {
+				countTime++;
 			}, 1000);
 		}
 	};
 
-	function init() {
-		if (_intervalId != null) {
-			clearInterval(_intervalId);
-		}
-		if (isMouseTrackRecord) {
-			sendMouseTrackData();
+	function _clearInterval() {
+		if (intervalId != null) {
+			clearInterval(intervalId);
+			countTime = 0;
 		}
 	}
 
 	function handleMouseLeave () {
-		init();
+		console.log('stop recording of mouse movement track when is out of card.');
+		_clearInterval()
 	};
 
 	onDestroy(() => {
-		init();
+		console.log('stop recording of mouse movement track  when is destroyed.');
+		_clearInterval();
+		if (isMouseTrackRecord) {
+			sendMouseTrackData();
+		}
 	});
 </script>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div 
-  on:mouseenter={handleMouseEnter} 
-  on:mousemove={handleMouseMove}
-  on:mouseleave={handleMouseLeave}>
-	<Card {...$$restProps}>
+<div class="inline-block"  on:mousemove={handleMouseMove}>
+	<Card  {...$$restProps} on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} >
 			<slot />
 	</Card>
 </div>
