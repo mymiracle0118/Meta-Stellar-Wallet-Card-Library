@@ -1,63 +1,71 @@
-.flex{
-    display:flex;
+.flex {
+  display: flex;
 }
-input{
-    width:max-content;
-    border-radius: 2em;
-    padding: 0.5em 1em;
-    border: 0.5px solid #ccc;
+input {
+  width: max-content;
+  border-radius: 2em;
+  padding: 0.5em 1em;
+  border: 0.5px solid #ccc;
 }
 
-.list{
-    list-style-type: none;
-    padding:0.5em;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: aquamarine;
+.list {
+  list-style-type: none;
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: aquamarine;
 }
 
 ul {
-    list-style-type: none;
-  }
-
-li{
-    list-style-type: none;
+  list-style-type: none;
 }
 
-.relative{
-    position: relative;
+li {
+  list-style-type: none;
 }
 
-.button{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 1em;
-    border-radius: 2em;
-    border: 0.5px solid #ccc;
-    cursor: pointer;
-    background-color: white;
-    width: 100%;
+.relative {
+  position: relative;
 }
 
-.h-44{
-    height: 44vh;
+.absolute {
+  position: absolute;
 }
-.popup{
-    z-index: 1000;
-    overflow-y: scroll;
-    overflow-x: hidden;
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  border-radius: 2em;
+  border: 0.5px solid #ccc;
+  cursor: pointer;
+  background-color: white;
+  width: 100%;
 }
-.flex-col{
-    display: flex;
-    flex-direction: column;
+
+.h-44 {
+  height: 44vh;
 }
-.flex-row{
-    display: flex;
-    flex-direction: row;
+.popup {
+  z-index: 1000;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-.w-full{
-    width: 100%;
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.w-full {
+  width: 100%;
+}
+
+.table {
+  display: table;
 }

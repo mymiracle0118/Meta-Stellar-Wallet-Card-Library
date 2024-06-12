@@ -29,6 +29,7 @@
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/package": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "publint": "^0.1.9",
     "svelte": "^4.2.7",
