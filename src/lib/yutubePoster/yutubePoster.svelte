@@ -6,8 +6,6 @@
 	import {sizes, paddings} from '$lib/constants.js';
 	import type {SizeType} from '$lib/types.js'
   
-
-  
   export let padding: SizeType | 'none' = 'lg';
   export let size: SizeType | 'none' = 'sm';
   export let horizontal: boolean = false;

@@ -31,9 +31,8 @@
   $: imgCls = twMerge(reverse ? 'rounded-b-lg' : 'rounded-t-lg', horizontal && 'object-cover w-full h-96 md:h-auto md:w-48 md:rounded-none', horizontal && (reverse ? 'md:rounded-e-lg' : 'md:rounded-s-lg'), imgClass);
 
 </script>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<Frame tag={href ? 'a' : 'div'} {...$$restProps} border shadow class={cardClass}>
-		{#if img}
+<Frame tag={href ? 'a' : 'div'} {...$$restProps} border shadow class={cardClass}>
+  {#if img}
     <img class={imgCls} src={img} alt="" />
     <div class={innerPadding}>
       <slot />
@@ -41,4 +40,4 @@
   {:else}
     <slot />
   {/if}
-	</Frame>
+</Frame>

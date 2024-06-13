@@ -135,7 +135,7 @@
 </script>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="inline-block"  on:mousemove={handleMouseMove}>
-	<Frame  {...$$restProps} rounded shadow border  on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} >
+	<Frame  {...$$restProps} rounded shadow border  on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click>
 		<slot/>
 	</Frame>
 </div>

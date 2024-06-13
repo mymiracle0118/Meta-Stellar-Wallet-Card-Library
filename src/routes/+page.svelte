@@ -1,6 +1,7 @@
 <script lang="ts">
   import Card from '$lib/card/card.svelte';
   import YutubePoster from '$lib/yutubePoster/yutubePoster.svelte';
+  import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -30,7 +31,7 @@
     </YutubePoster>
     <!--- Image post component-->
     <h3>Image poster component</h3>
-     <Card img="/images/test.png" isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData} padding="none" tag="a" href="/images/test.png"></Card>
+     <ImagePoster img="/images/test.png" isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData} padding="none"></ImagePoster>
     <!--- Assets selector component-->
     <h3>Assets selector component</h3>
     <AssetSelector/>
