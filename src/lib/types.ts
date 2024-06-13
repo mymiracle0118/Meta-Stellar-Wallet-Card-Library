@@ -33,6 +33,18 @@ export type MouseTrackDataType = {
   timestamp: number;
 };
 
+const xs = "xs";
+const sm = "sm";
+const md = "md";
+const lg = "lg";
+const xl = "xl";
+export declare type SizeType =
+  | typeof xs
+  | typeof sm
+  | typeof md
+  | typeof lg
+  | typeof xl;
+
 //special display asset for the native xlm
 export const xlm_display: DispAsset = {
   image:

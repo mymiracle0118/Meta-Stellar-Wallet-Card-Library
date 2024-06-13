@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentProps} from 'svelte';
+	import { onMount, type ComponentProps} from 'svelte';
   import Card from '$lib/card/card.svelte'
   
   interface $$Props extends ComponentProps<Card> {
@@ -49,6 +49,9 @@
       (videoElement as any).msRequestFullscreen();
     }
   }
+  onMount(()=>{
+    console.log($$restProps)
+  })
 </script>
 
 <Card {...$$restProps}>
@@ -94,7 +97,7 @@
       </div>
     </div>
   </div>
-  <div class="p-4 sm:p-6">
+  <div class="">
     <slot/>
   </div>
 </Card>
