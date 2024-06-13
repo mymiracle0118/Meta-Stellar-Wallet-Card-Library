@@ -1,6 +1,7 @@
 .flex {
   display: flex;
 }
+
 input {
   width: max-content;
   border-radius: 2em;
@@ -49,23 +50,31 @@ li {
 .h-44 {
   height: 44vh;
 }
+
 .popup {
   z-index: 1000;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
 .flex-col {
   display: flex;
   flex-direction: column;
 }
+
 .flex-row {
   display: flex;
   flex-direction: row;
 }
+
 .w-full {
   width: 100%;
 }
 
 .table {
   display: table;
+}
+
+.h-fit {
+  height: fit-content;
 }
