@@ -1,16 +1,36 @@
 <script lang="ts">
 	import { onMount, type ComponentProps} from 'svelte';
-  import Card from '$lib/card/card.svelte'
+  import { twMerge } from 'tailwind-merge';
+
+  import Frame from '$lib/frame/frame.svelte'
+	import {sizes, paddings} from '$lib/constants.js';
+	import type {SizeType} from '$lib/types.js'
   
-  interface $$Props extends ComponentProps<Card> {
+
+  
+  export let padding: SizeType | 'none' = 'lg';
+  export let size: SizeType | 'none' = 'sm';
+  export let horizontal: boolean = false;
+  export let reverse: boolean = false;
+  interface $$Props extends ComponentProps<Frame> {
     yutubeURL:string;
     thumnailURL:string;
     type:string;
+    padding?: SizeType | 'none';
+    size?: SizeType | 'none';
+    horizontal?: boolean;
+    reverse?: boolean;
   }
 
   export let yutubeURL:string = "";
   export let thumnailURL:string = "";
   export let type:string = "";
+
+  let innerPadding: string;
+  $: innerPadding = paddings[padding];
+
+  let cardClass: string;
+  $: cardClass = twMerge('flex w-full', sizes[size], reverse ? 'flex-col-reverse' : 'flex-col', horizontal && (reverse ? 'md:flex-row-reverse' : 'md:flex-row'), $$restProps.href && 'hover:bg-gray-100 dark:hover:bg-gray-700',  $$props.class);
 
 	let duration;
 	let paused = true;
@@ -54,7 +74,7 @@
   })
 </script>
 
-<Card {...$$restProps}>
+<Frame {...$$restProps} class={cardClass}>
   <div class="relative table h-fit">
     <div>
       <video
@@ -62,8 +82,8 @@
         src={yutubeURL}
         bind:duration
         bind:paused
-        style="border-radius:10px"
         bind:this={videoElement} 
+        class="rounded-tl-lg rounded-tr-lg"
       >
         <source src={yutubeURL} {type}/>
         <track kind="captions">
@@ -97,10 +117,10 @@
       </div>
     </div>
   </div>
-  <div class="">
+  <div class={innerPadding}>
     <slot/>
   </div>
-</Card>
+</Frame>
 
 <style>
   @import '../css/main.css';

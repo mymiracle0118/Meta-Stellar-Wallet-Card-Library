@@ -21,9 +21,9 @@
       thumnailURL="/images/1.jpg"
       type="video/mp4"
     >
-      <div class="pt-4 sm:pt-6">
+      <div class="">
         <a href="/video/1.mp4" class="mt-2">
-          <h5 class="mb-2 text-xl tracking-tight text-gray-900 hover:text-blue-600 hover:cursor-pointer">Meta stellar Yutube card</h5>
+          <h5 class="mb-2 text-xl tracking-tight text-gray-900 hover:text-[#1a0dab] hover:cursor-pointer hover:underline">Meta stellar Yutube card</h5>
         </a>
         <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
       </div>
