@@ -5,7 +5,7 @@
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
 
-  import { nftInfo } from '../constant.js';
+  import { nftInfo } from '../constants.js';
 
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -59,7 +59,7 @@
       <h3  class="mt-5">Image poster component</h3>
     </div>
     <div>
-      <!--- Image post component-->
+      <!--- NFT post component-->
       <NftPoster 
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
@@ -68,7 +68,7 @@
         bind:isMouseEntered
         isHoverTransform
         token={nftInfo}
-        metadata_url={"https://ipfs.io/ipfs/QmQiBZYdiTEozdn4LiumyACiQ9F7ga9tdu6GZmnqHQaLBh/843.json"}
+        metadataURL={"https://ipfs.io/ipfs/QmQiBZYdiTEozdn4LiumyACiQ9F7ga9tdu6GZmnqHQaLBh/843.json"}
       >
       </NftPoster>
       <h3  class="mt-5">Nft poster component</h3>
