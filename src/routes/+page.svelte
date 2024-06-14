@@ -3,6 +3,9 @@
   import YutubePoster from '$lib/yutubePoster/yutubePoster.svelte';
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
+  import NftPoster from '$lib/nftPoster/nftPoster.svelte';
+
+  import { nftInfo } from '../constant.js';
 
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -52,9 +55,26 @@
         intervalData={intervalData} 
         padding="none"
         bind:isMouseEntered
-        isTransform></ImagePoster>
+        isTransform
+      >
+      </ImagePoster>
       <h3  class="mt-5">Image poster component</h3>
-     </div>
+    </div>
+    <div>
+      <!--- Image post component-->
+      <NftPoster 
+        isMouseTrackRecord={recordMouseMoveTrack} 
+        dataURL="http://localhost/api" 
+        intervalData={intervalData} 
+        padding="none"
+        bind:isMouseEntered
+        isTransform
+        token={nftInfo}
+        metadata_url={"https://ipfs.io/ipfs/QmQiBZYdiTEozdn4LiumyACiQ9F7ga9tdu6GZmnqHQaLBh/843.json"}
+      >
+      </NftPoster>
+      <h3  class="mt-5">Nft poster component</h3>
+    </div>
     <div class="">
       <!--- Assets selector component-->
       <AssetSelector/>

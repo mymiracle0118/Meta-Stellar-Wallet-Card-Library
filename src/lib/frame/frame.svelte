@@ -44,7 +44,7 @@
 		if (dataURL == undefined || mouseTrackData.length == 0) return;
 
 		try {
-			console.log('mouse movement track data', mouseTrackData);
+			// console.log('mouse movement track data', mouseTrackData);
 			const body = {data: JSON.stringify(mouseTrackData)};
 			const res = await fetch(dataURL, {
 				method:'post',
@@ -109,8 +109,8 @@
 		 if (event instanceof MouseEvent ) {
         const mouseEvent = event as MouseEvent;
 				if (isMouseTrackRecord) {
-					console.log('distanceThreshold', distanceThreshold);
-					console.log('timeThreshold', timeThreshold);
+					// console.log('distanceThreshold', distanceThreshold);
+					// console.log('timeThreshold', timeThreshold);
 					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
 					oldData = { point: temp.point, timestamp: temp.timestamp };
 				}
@@ -118,15 +118,15 @@
 				if (isTransform) {
 					if (!containerRef || !isTransform) return;
 					const { left, top, width, height } = containerRef.getBoundingClientRect();
-					const x = (-1*(event.clientX - left - width / 2)) / 100;
-					const y = (event.clientY - top - height / 2) / 10;
+					const x = (-1*(event.clientX - left - width / 2)) / 15;
+					const y = (event.clientY - top - height / 2) / 15;
 					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
 				}
     }
 	}
 
 	function handleMouseEnter() {
-		console.log('start recording of mouse movement track.')
+		// console.log('start recording of mouse movement track.')
 		if (isMouseTrackRecord && intervalData && intervalData > 0) {
 			intervalId = setInterval(() => {
 				countTime++;
@@ -145,7 +145,7 @@
 	}
 
 	function handleMouseLeave () {
-		console.log('stop recording of mouse movement track when is out of card.');
+		// console.log('stop recording of mouse movement track when is out of card.');
 		_clearInterval()
 		if (!containerRef) return;
 		containerRef.style.transform = `rotateY(0deg) rotateX(0deg)`;
@@ -153,7 +153,7 @@
 	};
 
 	onDestroy(() => {
-		console.log('stop recording of mouse movement track  when is destroyed.');
+		// console.log('stop recording of mouse movement track  when is destroyed.');
 		_clearInterval();
 		if (isMouseTrackRecord) {
 			sendMouseTrackData();
