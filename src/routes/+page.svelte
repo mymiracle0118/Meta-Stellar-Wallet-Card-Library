@@ -10,9 +10,9 @@
   <div class="flex flex-col gap-5">
     <!--- Card component-->
     <h3>Metastellar basic card</h3>
-    <Card img="/images/test.png" isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData}>
-      <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5>
-      <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque at nobis doloremque odit labore provident unde officiis odio sit sint? Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+    <Card img="/images/test.png" isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData} >
+      <h5 class="mb-2 text-xl  tracking-tight text-gray-900 dark:text-white">Meta stellar card</h5>
+      <p class="mb-3 font-normal text-gray-700 leading-tight dark:text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque at nobis doloremque odit labore provident unde officiis odio sit sint? Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
     </Card>
     <!--- Yubute poseter component-->
     <h3>Yutube poster component</h3>
@@ -24,9 +24,9 @@
     >
       <div class="">
         <a href="/video/1.mp4" class="mt-2">
-          <h5 class="mb-2 text-xl tracking-tight text-gray-900 hover:text-[#1a0dab] hover:cursor-pointer hover:underline">Meta stellar Yutube card</h5>
+          <h5 class="mb-2 text-xl tracking-tight text-gray-900 dark:text-white hover:text-[#1a0dab] hover:cursor-pointer hover:underline">Meta stellar Yutube card</h5>
         </a>
-        <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+        <p class="mb-3 font-normal text-gray-700 leading-tight dark:text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
       </div>
     </YutubePoster>
     <!--- Image post component-->

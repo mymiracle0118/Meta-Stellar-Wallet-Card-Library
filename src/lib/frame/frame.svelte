@@ -7,6 +7,7 @@
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
+	
 
 	interface $$Props extends ComponentProps<Frame> {
     isMouseTrackRecord?: boolean;
