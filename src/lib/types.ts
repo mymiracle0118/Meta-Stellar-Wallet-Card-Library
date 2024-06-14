@@ -169,3 +169,33 @@ export interface message {
   timestamp: Date;
   img?: string;
 }
+
+export interface NFTAttribute {
+  trait_type: string, // trait type
+  value: string, // value
+}
+
+// NFT 
+export interface NFTMetadata {
+  platform: string, // nft website
+  created_by: string, // creator
+  collection_name: string, // nft collection name
+  name: string, // nft name
+  external_url: string, // external url
+  description: string, // description
+  image: string, // image
+  image_url: string, // image path
+  animation_url: string, // video url
+  copyright: string, // copyright
+  license: string, // license
+  attributes: NFTAttribute[]
+}
+
+// Token
+export interface NFTToken {
+  name: string, // token name
+  symbol: string, // token symbol
+  id: number, // nft token id
+  address: string, // nft contract address
+  standard: string // token type
+}

@@ -124,7 +124,7 @@
 	}
 
 	function handleMouseEnter() {
-		console.log('start recording of mouse movement track.')
+		// console.log('start recording of mouse movement track.')
 		if (isMouseTrackRecord && intervalData && intervalData > 0) {
 			intervalId = setInterval(() => {
 				countTime++;
@@ -143,7 +143,7 @@
 	}
 
 	function handleMouseLeave () {
-		console.log('stop recording of mouse movement track when is out of card.');
+		// console.log('stop recording of mouse movement track when is out of card.');
 		_clearInterval();
 		isMouseEntered = false;
 		if (!containerRef) return;
@@ -152,7 +152,7 @@
 	};
 
 	onDestroy(() => {
-		console.log('stop recording of mouse movement track  when is destroyed.');
+		// console.log('stop recording of mouse movement track  when is destroyed.');
 		_clearInterval();
 		if (isMouseTrackRecord) {
 			sendMouseTrackData();
