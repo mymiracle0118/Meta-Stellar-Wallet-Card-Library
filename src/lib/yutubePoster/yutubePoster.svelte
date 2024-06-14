@@ -1,33 +1,50 @@
 <script lang="ts">
-	import type { ComponentProps} from 'svelte';
-  import Card from '$lib/card/card.svelte'
+	import { onMount, type ComponentProps} from 'svelte';
+  import { twMerge } from 'tailwind-merge';
+
+  import Frame from '$lib/frame/frame.svelte'
+	import {sizes, paddings} from '$lib/constants.js';
+	import type {SizeType} from '$lib/types.js'
   
-  interface $$Props extends ComponentProps<Card> {
+  export let padding: SizeType | 'none' = 'lg';
+  export let size: SizeType | 'none' = 'sm';
+  export let horizontal: boolean = false;
+  export let reverse: boolean = false;
+  interface $$Props extends ComponentProps<Frame> {
     yutubeURL:string;
     thumnailURL:string;
     type:string;
+    padding?: SizeType | 'none';
+    size?: SizeType | 'none';
+    horizontal?: boolean;
+    reverse?: boolean;
   }
 
   export let yutubeURL:string = "";
   export let thumnailURL:string = "";
   export let type:string = "";
 
-  let time = 0;
+  let innerPadding: string;
+  $: innerPadding = paddings[padding];
+
+  let cardClass: string;
+  $: cardClass = twMerge('flex w-full', sizes[size], reverse ? 'flex-col-reverse' : 'flex-col', horizontal && (reverse ? 'md:flex-row-reverse' : 'md:flex-row'), $$restProps.href && 'hover:bg-gray-100 dark:hover:bg-gray-700',  $$props.class);
+
 	let duration;
 	let paused = true;
+  let videoElement:HTMLAudioElement;
 
 
-	function format(seconds) {
+	function format(seconds:number):string {
 		if (isNaN(seconds)) return '...';
 
 		const minutes = Math.floor(seconds / 60);
 		seconds = Math.floor(seconds % 60);
-		if (seconds < 10) seconds = '0' + seconds;
+    let formattedSeconds:string = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
-		return `${minutes}:${seconds}`;
+		return `${minutes}:${formattedSeconds}`;
 	}
-  
-  let videoElement;
+
   function toggleVideo(){
     if (paused) {
       videoElement.play();
@@ -42,39 +59,43 @@
   function  enterFullscreen() {
     if (videoElement.requestFullscreen) {
       videoElement.requestFullscreen();
-    } else if (videoElement.mozRequestFullScreen) { /* Firefox */
-      videoElement.mozRequestFullScreen();
-    } else if (videoElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-      videoElement.webkitRequestFullscreen();
-    } else if (videoElement.msRequestFullscreen) { /* IE/Edge */
-      videoElement.msRequestFullscreen();
+    } else if ((videoElement as any).mozRequestFullScreen) { /* Firefox */
+      (videoElement as any).mozRequestFullScreen();
+    } else if ((videoElement as any).webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      (videoElement as any).webkitRequestFullscreen();
+    } else if ((videoElement as any).msRequestFullscreen) { /* IE/Edge */
+      (videoElement as any).msRequestFullscreen();
     }
   }
+  onMount(()=>{
+    console.log($$restProps)
+  })
 </script>
 
-<Card {...$$restProps}>
-  <div class="relative table">
+<Frame {...$$restProps} class={cardClass}>
+  <div class="relative table h-fit">
     <div>
       <video
         poster={thumnailURL}
         src={yutubeURL}
         bind:duration
         bind:paused
-        style="border-radius:10px"
         bind:this={videoElement} 
+        class="rounded-tl-lg rounded-tr-lg"
       >
         <source src={yutubeURL} {type}/>
+        <track kind="captions">
       </video>
     </div>
     <div class="absolute play" style="margin-top:-6px" >
       <button on:click={toggleVideo}>
         {#if paused}
-        <svg height="50" width="50" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg height="30" width="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path fill="rgba(0, 0, 0, 0.6)" d="M0 16C0 7.163 7.163 0 16 0s16 7.163 16 16-7.163 16-16 16S0 24.837 0 16Z"></path>
           <path fill="#fff" d="M13 10.92v10.16a1 1 0 0 0 1.573.819l7.257-5.08a1 1 0 0 0 0-1.638l-7.256-5.08a1 1 0 0 0-1.574.82Z"></path>
         </svg>
         {:else}
-        <svg height="50" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill="rgba(0, 0, 0, 0.6)" d="M0 16C0 7.163 7.163 0 16 0s16 7.163 16 16-7.163 16-16 16S0 24.837 0 16Z"></path>
           <path d="M11,11 V21 H15 V11 Z M18,11 V21 H22 V11 Z" fill="white" />
         </svg>
@@ -94,10 +115,10 @@
       </div>
     </div>
   </div>
-  <div class="py-4 sm:py-6">
+  <div class={innerPadding}>
     <slot/>
   </div>
-</Card>
+</Frame>
 
 <style>
   @import '../css/main.css';
@@ -117,7 +138,7 @@
     font-family: arial, sans-serif-medium, sans-serif;
 
     line-height: 12px;
-    padding-block: 8px;
+    padding-block: 5px;
     padding-inline: 12px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
@@ -128,15 +149,15 @@
   }
   .tool .duration span {
     font-family: arial, sans-serif-medium, sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 12px;
   }
   .tool .expand {
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     color: #fff;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     line-height: 14px;
     padding: 3px;
     position: absolute;
@@ -145,9 +166,9 @@
     z-index:2;
   }
   .tool .expand span {   
+    width: 24px;
     height: 24px;
     line-height: 14px;
-    width: 24px;
     display: block;
     height: 100%;
     width: 100%;
@@ -159,8 +180,8 @@
     transform: rotate(45deg);
   }
   .play {
-    left:calc(50% - 25px);
-    top:calc(50% - 25px);
+    left:calc(50% - 15px);
+    top:calc(50% - 15px);
     z-index:2;
   }
 </style>

@@ -33,6 +33,18 @@ export type MouseTrackDataType = {
   timestamp: number;
 };
 
+const xs = "xs";
+const sm = "sm";
+const md = "md";
+const lg = "lg";
+const xl = "xl";
+export declare type SizeType =
+  | typeof xs
+  | typeof sm
+  | typeof md
+  | typeof lg
+  | typeof xl;
+
 //special display asset for the native xlm
 export const xlm_display: DispAsset = {
   image:
@@ -157,3 +169,66 @@ export interface message {
   timestamp: Date;
   img?: string;
 }
+
+export interface NFTAttribute {
+  trait_type: string, // trait type
+  value: string, // value
+}
+
+// Token ---------------------------------------------------------------------------------------------------------------------------------------
+// NFT 
+export interface NFTMetadata {
+  platform: string, // nft website
+  created_by: string, // creator
+  collection_name: string, // nft collection name
+  name: string, // nft name
+  external_url: string, // external url
+  description: string, // description
+  image: string, // image
+  image_url: string, // image path
+  animation_url: string, // video url
+  copyright: string, // copyright
+  license: string, // license
+  attributes: NFTAttribute[]
+}
+
+// NFT Token
+export interface NFTToken {
+  name: string, // token name
+  symbol: string, // token symbol
+  id: number, // nft token id
+  address: string, // nft contract address
+  standard: string // token type
+}
+
+export interface AssetExtra {
+  authorized: number,
+  authorized_to_maintain_liabilities: number,
+  unauthorized: number
+}
+
+export interface AssetFlag {
+  auth_required: boolean,
+  auth_revocable: boolean,
+  auth_immutable: boolean
+}
+
+// FT Token
+export interface Asset {
+  asset_type: string, // This asset's type. Either credit_alphanum4 or credit_alphanum12.
+  asset_code: string, // This asset's code
+  asset_issuer: string, // The Stellar address of this asset’s issuer.
+  accounts: AssetExtra, // The number of accounts grouped by each trustline flag state.
+  num_claimable_balances: number, // The current number of claimable_balances for this asset.
+  num_contracts: number, // The current number of Soroban contracts holding this asset.
+  num_liquidity_pools: number, // The current number of liquidity pools holding this asset.
+  balances: AssetExtra, // The number of units issued for this asset grouped by each trustline flag state.
+  claimable_balances_amount: string, // The number of units for this asset held by all claimable balances.
+  contracts_amount: string, // The number of units for this asset held by all Soroban contracts.
+  liquidity_pools_amount: string, // The number of units for this asset held by all liquidity pools.
+  amount: string, // The number of authorized units issued for this asset. This will be deprecated in Horizon v3.
+  num_accounts: number, // The number of accounts that have issued a trustline to this asset. If the auth_required flag for this asset's issuer is set to true, this number only includes the accounts who have both set up a trustline to the asset and have been authorized to hold the asset. This will be deprecated in Horizon v3.
+  flags: AssetFlag
+}
+
+// Token Ends ---------------------------------------------------------------------------------------------------------------------------------------
