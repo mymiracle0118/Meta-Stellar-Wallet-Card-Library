@@ -7,12 +7,23 @@
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
+<<<<<<< HEAD
 	
+=======
+	export let isTransform: boolean | undefined = undefined;
+	export let isMouseEntered:boolean = false;
+	export let distanceThreshold: number = 10; 
+	export let timeThreshold:number = 500;
+>>>>>>> 6043a605d06576b4090ba3227b6b0265b6ccb715
 
 	interface $$Props extends ComponentProps<Frame> {
     isMouseTrackRecord?: boolean;
 		dataURL?: string;
 		intervalData?: number;
+		isTransform?:boolean;
+		isMouseEntered?:boolean,
+		distanceThreshold?:number, 
+		timeThreshold?:number
   }
 
 	let intervalId: any;
@@ -96,12 +107,25 @@
 		return oldData;
 	};
 
-	function handleMouseMove(event: Event) {
-		 if (event instanceof MouseEvent && isMouseTrackRecord) {
-        const mouseEvent = event as MouseEvent;
+	let containerRef: HTMLDivElement;
 
-        const temp = recordMouseTrack(oldData, mouseEvent, 10, 500, true);
-        oldData = { point: temp.point, timestamp: temp.timestamp };
+	function handleMouseMove(event: Event) {
+		 if (event instanceof MouseEvent ) {
+        const mouseEvent = event as MouseEvent;
+				if (isMouseTrackRecord) {
+					console.log('distanceThreshold', distanceThreshold);
+					console.log('timeThreshold', timeThreshold);
+					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
+					oldData = { point: temp.point, timestamp: temp.timestamp };
+				}
+			
+				if (isTransform) {
+					if (!containerRef || !isTransform) return;
+					const { left, top, width, height } = containerRef.getBoundingClientRect();
+					const x = (-1*(event.clientX - left - width / 2)) / 100;
+					const y = (event.clientY - top - height / 2) / 10;
+					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
+				}
     }
 	}
 
@@ -112,6 +136,9 @@
 				countTime++;
 			}, 1000);
 		}
+		
+		isMouseEntered = true;
+		if (!containerRef) return;
 	};
 
 	function _clearInterval() {
@@ -124,6 +151,9 @@
 	function handleMouseLeave () {
 		console.log('stop recording of mouse movement track when is out of card.');
 		_clearInterval()
+		if (!containerRef) return;
+		containerRef.style.transform = `rotateY(0deg) rotateX(0deg)`;
+
 	};
 
 	onDestroy(() => {
@@ -135,8 +165,13 @@
 	});
 </script>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="inline-block"  on:mousemove={handleMouseMove}>
-	<Frame  {...$$restProps} rounded shadow border  on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click>
-		<slot/>
-	</Frame>
+<div style="perspective: 1000px;">
+	<div 
+		class="inline-block " 	
+		bind:this={containerRef} 
+		on:mousemove={handleMouseMove}>
+		<Frame {...$$restProps} rounded shadow border  on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click>
+			<slot/>
+		</Frame>
+	</div>
 </div>
