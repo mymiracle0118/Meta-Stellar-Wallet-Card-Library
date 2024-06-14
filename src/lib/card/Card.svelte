@@ -12,6 +12,7 @@
   export let size: SizeType | 'none' = 'sm';
   export let horizontal: boolean = false;
   export let reverse: boolean = false;
+  export let isMouseEntered:boolean = false;
 	
 	interface $$Props extends ComponentProps<Frame> {
     img?: string;
@@ -23,7 +24,6 @@
 
 	let innerPadding: string;
   $: innerPadding = paddings[padding];
-
   let cardClass: string;
   $: cardClass = twMerge('flex w-full', sizes[size], reverse ? 'flex-col-reverse' : 'flex-col', horizontal && (reverse ? 'md:flex-row-reverse' : 'md:flex-row'), $$restProps.href && 'hover:bg-gray-100 dark:hover:bg-gray-700', !img && innerPadding, $$props.class);
 
@@ -31,7 +31,8 @@
   $: imgCls = twMerge(reverse ? 'rounded-b-lg' : 'rounded-t-lg', horizontal && 'object-cover w-full h-96 md:h-auto md:w-48 md:rounded-none', horizontal && (reverse ? 'md:rounded-e-lg' : 'md:rounded-s-lg'), imgClass);
 
 </script>
-<Frame tag={href ? 'a' : 'div'} {...$$restProps} border shadow class={cardClass}>
+<Frame tag={href ? 'a' : 'div'} {...$$restProps} border shadow class={cardClass} bind:isMouseEntered >
+ 
   {#if img}
     <img class={imgCls} src={img} alt="" />
     <div class={innerPadding}>

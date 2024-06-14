@@ -16,13 +16,13 @@
       <Card 
         img="/images/test.png"
         bind:isMouseEntered
-        isTransform
+        isHoverTransform
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
         >
-        <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5>
-        <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+          <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5>
+          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
       </Card>
       <h3 class="mt-5">Metastellar basic card</h3>
     </div>
@@ -52,7 +52,7 @@
         intervalData={intervalData} 
         padding="none"
         bind:isMouseEntered
-        isTransform></ImagePoster>
+        isHoverTransform></ImagePoster>
       <h3  class="mt-5">Image poster component</h3>
      </div>
     <div class="">
