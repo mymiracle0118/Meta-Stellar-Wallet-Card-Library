@@ -7,14 +7,10 @@
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
-<<<<<<< HEAD
-	
-=======
 	export let isTransform: boolean | undefined = undefined;
 	export let isMouseEntered:boolean = false;
 	export let distanceThreshold: number = 10; 
 	export let timeThreshold:number = 500;
->>>>>>> 6043a605d06576b4090ba3227b6b0265b6ccb715
 
 	interface $$Props extends ComponentProps<Frame> {
     isMouseTrackRecord?: boolean;
