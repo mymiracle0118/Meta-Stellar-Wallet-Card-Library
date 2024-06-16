@@ -1,11 +1,12 @@
 <script lang="ts">
   import Card from '$lib/card/card.svelte';
+  import CardItem from '$lib/card/item.svelte';
   import YutubePoster from '$lib/yutubePoster/yutubePoster.svelte';
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
 
-  import { nftInfo } from '../constant.js';
+  import { nftInfo } from '../constants.js';
 
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -17,15 +18,27 @@
     <!--- Card component-->
     <div>
       <Card 
-        img="/images/test.png"
         bind:isMouseEntered
-        isTransform
+        isHoverTransform
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
         >
-        <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5>
-        <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+          <CardItem
+            {isMouseEntered}
+            translateZ="100"
+            isHoverTransform={true}
+            className=" mt-4"> 
+            <img class={"rounded-lg"} src={"/images/test.png"} alt="" />
+          </CardItem>
+          <CardItem
+            {isMouseEntered}
+            translateZ="100"
+            isHoverTransform={true}
+            className=" mt-4"> 
+            <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
+            <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+          </CardItem>
       </Card>
       <h3 class="mt-5">Metastellar basic card</h3>
     </div>
@@ -55,22 +68,20 @@
         intervalData={intervalData} 
         padding="none"
         bind:isMouseEntered
-        isTransform
-      >
-      </ImagePoster>
+        isHoverTransform></ImagePoster>
       <h3  class="mt-5">Image poster component</h3>
     </div>
     <div>
-      <!--- Image post component-->
+      <!--- NFT post component-->
       <NftPoster 
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData} 
         padding="none"
         bind:isMouseEntered
-        isTransform
+        isHoverTransform
         token={nftInfo}
-        metadata_url={"https://ipfs.io/ipfs/QmQiBZYdiTEozdn4LiumyACiQ9F7ga9tdu6GZmnqHQaLBh/843.json"}
+        metadataURL={"https://ipfs.io/ipfs/QmQiBZYdiTEozdn4LiumyACiQ9F7ga9tdu6GZmnqHQaLBh/843.json"}
       >
       </NftPoster>
       <h3  class="mt-5">Nft poster component</h3>
