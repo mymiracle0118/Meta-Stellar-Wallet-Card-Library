@@ -7,7 +7,7 @@
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
-	export let isTransform: boolean | undefined = undefined;
+	export let isHoverTransform: boolean | undefined = undefined;
 	export let isMouseEntered:boolean = false;
 	export let distanceThreshold: number = 10; 
 	export let timeThreshold:number = 500;
@@ -16,7 +16,7 @@
     isMouseTrackRecord?: boolean;
 		dataURL?: string;
 		intervalData?: number;
-		isTransform?:boolean;
+		isHoverTransform?:boolean;
 		isMouseEntered?:boolean,
 		distanceThreshold?:number, 
 		timeThreshold?:number
@@ -30,7 +30,7 @@
 	$: if (isMouseTrackRecord && intervalData != undefined && countTime != 0 && (countTime % intervalData == 0)) {
 		sendMouseTrackData();
 	}
-
+	
 	function clearMouseTrackData() {
 		mouseTrackData = [];
 	};
@@ -109,17 +109,15 @@
 		 if (event instanceof MouseEvent ) {
         const mouseEvent = event as MouseEvent;
 				if (isMouseTrackRecord) {
-					// console.log('distanceThreshold', distanceThreshold);
-					// console.log('timeThreshold', timeThreshold);
 					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
 					oldData = { point: temp.point, timestamp: temp.timestamp };
 				}
 			
-				if (isTransform) {
-					if (!containerRef || !isTransform) return;
+				if (isHoverTransform) {
+					if (!containerRef || !isHoverTransform) return;
 					const { left, top, width, height } = containerRef.getBoundingClientRect();
-					const x = (-1*(event.clientX - left - width / 2)) / 15;
-					const y = (event.clientY - top - height / 2) / 15;
+					const x = (-1*(event.clientX - left - width / 2)) / 25;
+					const y = (event.clientY - top - height / 2) / 25;
 					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
 				}
     }
@@ -146,7 +144,8 @@
 
 	function handleMouseLeave () {
 		// console.log('stop recording of mouse movement track when is out of card.');
-		_clearInterval()
+		_clearInterval();
+		isMouseEntered = false;
 		if (!containerRef) return;
 		containerRef.style.transform = `rotateY(0deg) rotateX(0deg)`;
 
