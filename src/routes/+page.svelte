@@ -1,5 +1,6 @@
 <script lang="ts">
   import Card from '$lib/card/card.svelte';
+  import CardItem from '$lib/card/item.svelte';
   import YutubePoster from '$lib/yutubePoster/yutubePoster.svelte';
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
@@ -17,15 +18,27 @@
     <!--- Card component-->
     <div>
       <Card 
-        img="/images/test.png"
         bind:isMouseEntered
         isHoverTransform
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
         >
-          <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5>
-          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+          <CardItem
+            {isMouseEntered}
+            translateZ="100"
+            isHoverTransform={true}
+            className=" mt-4"> 
+            <img class={"rounded-lg"} src={"/images/test.png"} alt="" />
+          </CardItem>
+          <CardItem
+            {isMouseEntered}
+            translateZ="100"
+            isHoverTransform={true}
+            className=" mt-4"> 
+            <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
+            <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+          </CardItem>
       </Card>
       <h3 class="mt-5">Metastellar basic card</h3>
     </div>
