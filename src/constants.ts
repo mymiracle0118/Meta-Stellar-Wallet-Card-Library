@@ -15,3 +15,4 @@ export const tokenInfo: Token = {
   decimal: 18,
   address: "0x1b41d54b3f8de13d58102c50d7431fd6aa1a2c48"
 }
+  
