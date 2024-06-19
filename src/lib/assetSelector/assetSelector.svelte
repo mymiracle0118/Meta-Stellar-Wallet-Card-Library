@@ -28,6 +28,7 @@
         let assetId: string;
         let supply: number;
         let price: Array<number[]>;
+        // console.log("getAssetDisp", asset);
         if(asset.tomlInfo !== undefined){
             image = asset.tomlInfo.image;
             code = asset.tomlInfo.code;
@@ -36,8 +37,8 @@
             image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQErufEdC325ECfUANYh7lzYRbsQxI67-xbjj3kfbovEQ&s"
             code = asset.asset.split('-')[0];
         }
-        console.log("asset selector asset is");
-        console.log(asset);
+        // console.log("asset selector asset is");
+        // console.log("get asset", asset);
         domain = asset.domain;
         assetId = asset.asset.split('-')[1];
         supply = asset.supply;
@@ -51,7 +52,7 @@
             network = 'public';
         }
         const url = 'https://api.stellar.expert/explorer/';
-        console.log("here in search asset");
+        // console.log("here in search asset");
         if(onlyOwnedAssets){
             return [];
         }
@@ -76,7 +77,7 @@
             outputArray.push(getAssetDisp(asset));
         }
         outputArray.push(...ownedAssets);
-        console.log("search complete setting output array");
+        // console.log("search complete setting output array");
         DropdownOpen = true
         assetResults = outputArray;
         console.log(outputArray);
@@ -91,7 +92,7 @@
             console.log(e);
             e.preventDefault();
             e.stopPropagation();
-            console.log("asset is: ");
+            // console.log("asset is: ");
             console.log(assetdisp.asset)
             console.log(assetdisp);
             selectedAsset = new StellarSdk.Asset(assetdisp.code, assetdisp.asset)
