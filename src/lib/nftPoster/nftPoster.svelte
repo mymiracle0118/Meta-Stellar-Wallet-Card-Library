@@ -24,24 +24,28 @@
   let assetMetadata: AssetMetaData;
 
   async function fetchToml(request: string, code: string) {
+    console.log("request", request);
     try {
       const res = await fetch(request);
       if(res.ok) {
-        const result = await res.text();
+        let result = await res.text();
+        result = result.replace(" ", "");
+        // console.log(result);
         const assetMetadataArray = result.split('[[CURRENCIES]]')
         .filter(Boolean) // Filter empty elements resulting from splitting
         .slice(1) // Slice away the first element, which includes VERSION and NETWORK_PASSPHRASE
         .map(entry => ({
-          code: entry.match(/code = '[^']+'/)?.[0].replace('code = ', '').replace(/'/g, ""),
-          issuer: entry.match(/issuer = '[^']+'/)?.[0].replace('issuer = ', '').replace(/'/g, ""),
-          decimals: entry.match(/display_decimals = (\d+\.\d+)/)?.[1].replace(/'/g, ""),
-          anchored: entry.match(/is_asset_anchored = (true|false)/)?.[1] === 'true',
-          name: entry.match(/name = '[^']+'/)?.[0].replace('name = ', '').replace(/'/g, ""),
-          desc: entry.match(/desc = '[^']+'/)?.[0].replace('desc = ', '').replace(/'/g, ""),
-          image: entry.match(/image = '[^']+'/)?.[0].replace('image = ', '').replace(/'/g, "")
+          code: entry.match(/code="([^"]*)"/)?.[1],
+          issuer: entry.match(/issuer="([^"]*)"/)?.[1],
+          anchor_asset_type: entry.match(/anchor_asset_type="([^"]*)"/)?.[1],
+          name: entry.match(/name="([^"]*)"/)?.[1],
+          desc: entry.match(/desc="([^"]*)"/)?.[1],
+          image: entry.match(/image="([^"]*)"/)?.[1],
+          display_decimals: entry.match(/display_decimals=(\d*\.*\d*)/)?.[1]
         }));
+        console.log(assetMetadataArray);
         const assetMetadata = assetMetadataArray.filter(entry => !code || entry.code?.includes(code));
-        // console.log("assetMetadata", assetMetadata);
+        console.log("assetMetadata", assetMetadata);
         if(assetMetadata == undefined || assetMetadata[0] == undefined) {
           return {
             result: false,
@@ -78,6 +82,7 @@
         assetInfo = result._embedded.records[0];
         console.log(assetInfo._links.toml.href);
         const metaDataInfo = await fetchToml(assetInfo._links.toml.href, assetAccount.code);
+        console.log(metaDataInfo);
         // return metaDataInfo;
         if(metaDataInfo && metaDataInfo.result) {
           assetMetadata = metaDataInfo.data as AssetMetaData;
