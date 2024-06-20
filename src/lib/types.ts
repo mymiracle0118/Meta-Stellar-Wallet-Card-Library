@@ -212,8 +212,8 @@ export interface AssetRaw {
 export interface AssetMetaData {
   code: string | undefined;
   issuer: string | undefined;
-  decimals: string | undefined;
-  anchored: boolean;
+  // decimals: string | undefined;
+  // anchored: boolean;
   name: string | undefined;
   desc: string | undefined;
   image: string | undefined;
