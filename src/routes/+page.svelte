@@ -1,6 +1,5 @@
 <script lang="ts">
   import Card from '$lib/card/card.svelte';
-  import CardItem from '$lib/card/item.svelte';
   import YutubePoster from '$lib/youtubePoster/youtubePoster.svelte';
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
@@ -10,35 +9,28 @@
 
   let recordMouseMoveTrack = true;
   let intervalData = 5;
-  let isMouseEntered = false;
 
+  let isMouseEntered = false;
 </script>
 <div class="w-full mx-auto p-6 flex justify-center flex-wrap gap-2 mt-10">
   <div class="flex flex-col gap-5">
     <!--- Card component-->
     <div>
       <Card 
-        bind:isMouseEntered
-        isHoverTransform
+        img="/images/test.png"
+        imgClass="m-3 rounded-lg"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
+        isMouseEntered
+        border
+        size="lg"
+        rounded
+        shadow
+        hoverTransform
         >
-          <CardItem
-            {isMouseEntered}
-            translateZ="100"
-            isHoverTransform={true}
-            className=" mt-4"> 
-            <img class={"rounded-lg"} src={"/images/test.png"} alt="" />
-          </CardItem>
-          <CardItem
-            {isMouseEntered}
-            translateZ="100"
-            isHoverTransform={true}
-            className=" mt-4"> 
-            <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
-            <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
-          </CardItem>
+          <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
+          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
       </Card>
       <h3 class="mt-5">Metastellar basic card</h3>
     </div>
@@ -49,6 +41,12 @@
         yutubeURL="/video/1.mp4"
         thumnailURL="/images/1.jpg"
         type="video/mp4"
+        border
+        rounded
+        size="lg"
+        shadow
+        videoClass="p-3"
+        hoverTransform
       >
         <div class="">
           <a href="/video/1.mp4" class="mt-2">
@@ -67,8 +65,9 @@
         dataURL="http://localhost/api" 
         intervalData={intervalData} 
         padding="none"
-        bind:isMouseEntered
-        isHoverTransform></ImagePoster>
+        size="lg"
+        rounded
+        hoverTransform></ImagePoster>
       <h3  class="mt-5">Image poster component</h3>
     </div>
     <div>
@@ -77,9 +76,10 @@
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData} 
-        padding="none"
-        bind:isMouseEntered
-        isHoverTransform
+        hoverTransform
+        size="lg"
+        rounded
+        shadow
         assetAccount={assetInfo}
       >
       </NftPoster>

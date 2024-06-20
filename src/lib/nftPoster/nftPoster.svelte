@@ -3,14 +3,16 @@
   import { ImagePlaceholder } from 'flowbite-svelte';
   import { onMount } from 'svelte';
   import { twMerge } from 'tailwind-merge';
+
 	import Frame from "../frame/frame.svelte";
 	import type {SizeType, AssetAccount, AssetRaw, AssetMetaData} from '$lib/types.js';
-	import {sizes, baseURL} from '$lib/constants.js';
+	import {sizes, paddings, baseURL} from '$lib/constants.js';
 
 	let showModal = false;
 
   export let size: SizeType | 'none' = 'sm';
   export let assetAccount: AssetAccount;
+  export let padding: SizeType | 'none' = 'sm';
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
@@ -19,7 +21,7 @@
 	}
 
  	let cardClass: string;
-  $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class);
+  $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class, paddings[padding]);
   let assetInfo: AssetRaw;
   let assetMetadata: AssetMetaData;
 
@@ -102,12 +104,13 @@
   onMount(() => {
     getMetadata(assetAccount);
 	});
-
+	let imgClass:string;
+	$:imgClass = twMerge('hover:cursor-pointer', $$props.rounded && ('rounded-lg'))
 </script>
 
-<Frame tag="div" {...$$restProps} border shadow class={cardClass} on:click={() => (showModal = true)}>
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
   {#if assetMetadata?.image}
-  <img class="rounded-t-lg p-4" src={assetMetadata?.image} alt="product 1" />
+  <img class={imgClass} src={assetMetadata?.image} alt="product 1" />
   {:else}
   <ImagePlaceholder imgOnly class="mt-12" />
   {/if}

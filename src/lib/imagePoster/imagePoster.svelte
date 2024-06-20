@@ -20,11 +20,13 @@
  	let cardClass: string;
   $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class);
 
+	let imgClass:string;
+	$:imgClass = twMerge('hover:cursor-pointer', $$props.rounded && ('rounded-lg'))
 
 </script>
 
-<Frame tag="div" {...$$restProps} border shadow class={cardClass} on:click={() => (showModal = true)}>
-	<img class="rounded-lg hover:cursor-pointer" src={img} alt="" />
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
+	<img class={imgClass} src={img} alt="" />
 </Frame>
 <Modal bind:showModal>
 	<img class="" src={img} alt="" />

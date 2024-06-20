@@ -1,0 +1,44 @@
+.ms-frame{
+  cursor: pointer;
+}
+.ms-frame.hover:hover{
+  animation: both 3s float infinite;
+	& img {
+  	animation: both 3s float1 infinite;
+	}
+}
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px) scale(1);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-5px) scale(1.01);
+
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px) scale(1);
+	}
+}
+
+@keyframes float1 {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatez(0px) scale(1);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatez(30px) scale(1.02);
+
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatez(0px) scale(1);
+	}
+}
+.ms-card__item.hover:hover  {
+  animation: both 3s float infinite;
+}
