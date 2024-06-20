@@ -27,3 +27,5 @@ export const sizes: Record<SizeType | "none", string> = {
   lg: "max-w-2xl",
   xl: "max-w-screen-xl",
 };
+
+export const baseURL: string = "https://horizon.stellar.org/";
