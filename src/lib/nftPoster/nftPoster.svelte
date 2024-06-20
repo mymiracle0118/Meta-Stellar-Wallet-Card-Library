@@ -29,21 +29,21 @@
       const res = await fetch(request);
       if(res.ok) {
         let result = await res.text();
-        result = result.replace(" ", "");
+        // result = result.replaceAll(" ", "");
         // console.log(result);
         const assetMetadataArray = result.split('[[CURRENCIES]]')
         .filter(Boolean) // Filter empty elements resulting from splitting
         .slice(1) // Slice away the first element, which includes VERSION and NETWORK_PASSPHRASE
         .map(entry => ({
-          code: entry.match(/code="([^"]*)"/)?.[1],
-          issuer: entry.match(/issuer="([^"]*)"/)?.[1],
-          anchor_asset_type: entry.match(/anchor_asset_type="([^"]*)"/)?.[1],
-          name: entry.match(/name="([^"]*)"/)?.[1],
-          desc: entry.match(/desc="([^"]*)"/)?.[1],
-          image: entry.match(/image="([^"]*)"/)?.[1],
-          display_decimals: entry.match(/display_decimals=(\d*\.*\d*)/)?.[1]
+          code: entry.match(/code\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          issuer: entry.match(/issuer\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          // anchor_asset_type: entry.match(/anchor_asset_type\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          name: entry.match(/name\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          desc: entry.match(/desc\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          image: entry.match(/image\s*=\s*['"]*([^'"]*)['"]*/)?.[1],
+          // display_decimals: entry.match(/display_decimals\s*=\s*(\d*\.*\d*)/)?.[1]
         }));
-        console.log(assetMetadataArray);
+        // console.log(assetMetadataArray);
         const assetMetadata = assetMetadataArray.filter(entry => !code || entry.code?.includes(code));
         console.log("assetMetadata", assetMetadata);
         if(assetMetadata == undefined || assetMetadata[0] == undefined) {
@@ -80,13 +80,13 @@
         }
 
         assetInfo = result._embedded.records[0];
-        console.log(assetInfo._links.toml.href);
+        // console.log(assetInfo._links.toml.href);
         const metaDataInfo = await fetchToml(assetInfo._links.toml.href, assetAccount.code);
         console.log(metaDataInfo);
         // return metaDataInfo;
         if(metaDataInfo && metaDataInfo.result) {
           assetMetadata = metaDataInfo.data as AssetMetaData;
-          console.log(assetMetadata);
+          // console.log(assetMetadata);
         }
       }
 		} catch (e) {
