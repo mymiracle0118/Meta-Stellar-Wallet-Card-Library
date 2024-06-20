@@ -212,15 +212,15 @@ export interface AssetRaw {
 export interface AssetMetaData {
   code: string | undefined;
   issuer: string | undefined;
-  // decimals: string | undefined;
-  // anchored: boolean;
+  decimals?: string | undefined;
+  anchored?: boolean;
   name: string | undefined;
   desc: string | undefined;
   image: string | undefined;
 }
 
 // FT Token
-export interface AssetAccount {
+export interface StellarAsset {
   code: string, // This asset's code
   issuer: string, // The Stellar address of this asset’s issuer.
 }
