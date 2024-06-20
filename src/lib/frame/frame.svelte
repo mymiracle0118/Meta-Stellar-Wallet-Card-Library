@@ -114,15 +114,15 @@
 					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
 					oldData = { point: temp.point, timestamp: temp.timestamp };
 				}
-				if (hoverTransform) {
-					if (!containerRef || !hoverTransform) return;
+				// if (hoverTransform) {
+				// 	if (!containerRef || !hoverTransform) return;
 
-					const { left, top, width, height } = containerRef.getBoundingClientRect();
-					const x = (-1*(event.clientX - left - width / 2)) / 25;
-					const y = (event.clientY - top - height / 2) / 25;
-					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
-					console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
-				}
+				// 	const { left, top, width, height } = containerRef.getBoundingClientRect();
+				// 	const x = (-1*(event.clientX - left - width / 2)) / 25;
+				// 	const y = (event.clientY - top - height / 2) / 25;
+				// 	containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
+				// 	console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
+				// }
     }
 	}
 
@@ -177,7 +177,9 @@
 		class={containerClass}
 		bind:this={containerRef} 
 		on:mousemove={handleMouseMove}>
+ <div style="perspective: 3000px;">
 		<Frame {...$$restProps} on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click class={cardClass}>
 			<slot/>
 		</Frame>
+	</div>
 	</div>
