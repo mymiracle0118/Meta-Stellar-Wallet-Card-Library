@@ -1,7 +1,7 @@
 <script lang="ts">
   import Card from '$lib/card/card.svelte';
   import CardItem from '$lib/card/item.svelte';
-  import YutubePoster from '$lib/yutubePoster/yutubePoster.svelte';
+  import YutubePoster from '$lib/youtubePoster/youtubePoster.svelte';
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
