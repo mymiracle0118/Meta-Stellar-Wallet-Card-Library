@@ -1,13 +1,15 @@
 <script lang="ts">
+	import './style.css'
 	import { onDestroy, type ComponentProps} from 'svelte';
 	import {Frame} from "flowbite-svelte";
 	import type {MouseTrackDataType} from '$lib/types.js'
+  import { twMerge } from 'tailwind-merge';
 
 	// defined whether mouse track is recorded or not
 	export let isMouseTrackRecord: boolean = false;
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
-	export let isHoverTransform: boolean | undefined = undefined;
+	export let hoverTransform: boolean | undefined = undefined;
 	export let isMouseEntered:boolean = false;
 	export let distanceThreshold: number = 10; 
 	export let timeThreshold:number = 500;
@@ -16,10 +18,10 @@
     isMouseTrackRecord?: boolean;
 		dataURL?: string;
 		intervalData?: number;
-		isHoverTransform?:boolean;
-		isMouseEntered?:boolean,
+		hoverTransform?:boolean;
 		distanceThreshold?:number, 
-		timeThreshold?:number
+		timeThreshold?:number,
+		isMouseEntered?:boolean,
   }
 
 	let intervalId: any;
@@ -30,7 +32,7 @@
 	$: if (isMouseTrackRecord && intervalData != undefined && countTime != 0 && (countTime % intervalData == 0)) {
 		sendMouseTrackData();
 	}
-	
+
 	function clearMouseTrackData() {
 		mouseTrackData = [];
 	};
@@ -112,14 +114,15 @@
 					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
 					oldData = { point: temp.point, timestamp: temp.timestamp };
 				}
-			
-				if (isHoverTransform) {
-					if (!containerRef || !isHoverTransform) return;
-					const { left, top, width, height } = containerRef.getBoundingClientRect();
-					const x = (-1*(event.clientX - left - width / 2)) / 25;
-					const y = (event.clientY - top - height / 2) / 25;
-					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
-				}
+				// if (hoverTransform) {
+				// 	if (!containerRef || !hoverTransform) return;
+
+				// 	const { left, top, width, height } = containerRef.getBoundingClientRect();
+				// 	const x = (-1*(event.clientX - left - width / 2)) / 25;
+				// 	const y = (event.clientY - top - height / 2) / 25;
+				// 	containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
+				// 	console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
+				// }
     }
 	}
 
@@ -158,15 +161,25 @@
 			sendMouseTrackData();
 		}
 	});
+
+	
+	
+	let containerClass;
+	$:containerClass = twMerge('ms-frame inline-block', $$props.rounded && 'rounded-lg', hoverTransform && "hover", )
+
+	let cardClass: string;
+  $: cardClass = twMerge(' inline-block ', $$props.class);
+
+
 </script>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div style="perspective: 1000px;">
 	<div 
-		class="inline-block " 	
+		class={containerClass}
 		bind:this={containerRef} 
 		on:mousemove={handleMouseMove}>
-		<Frame {...$$restProps} rounded shadow border  on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click>
+ <div style="perspective: 3000px;">
+		<Frame {...$$restProps} on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click class={cardClass}>
 			<slot/>
 		</Frame>
 	</div>
-</div>
+	</div>
