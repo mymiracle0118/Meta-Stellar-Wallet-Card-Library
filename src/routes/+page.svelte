@@ -12,83 +12,96 @@
 
   let isMouseEntered = false;
 </script>
-<div class="w-full mx-auto p-6 flex justify-center flex-wrap gap-2 mt-10">
-  <div class="flex flex-col gap-5">
-    <!--- Card component-->
-    <div>
+<div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 mt-10 max-w-7xl">
+  <div class="flex flex-row gap-5 max-w-7xl">
       <Card 
-        img="/images/test.png"
-        imgClass="m-3 rounded-lg"
+        img="/images/wallet.webp"
+        imgClass=" rounded-lg"
+        bodyClass="mt-5"
+        class="p-5 w-2/3"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
-        isMouseEntered
-        border
-        size="lg"
-        rounded
-        shadow
         hoverTransform
+        imgHoverTransform
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
       </Card>
-      <h3 class="mt-5">Metastellar basic card</h3>
-    </div>
-    <div>
-    <!--- Yubute poseter component-->
-      <YutubePoster
-        isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData}
-        yutubeURL="/video/1.mp4"
-        thumnailURL="/images/1.jpg"
-        type="video/mp4"
-        border
-        rounded
-        size="lg"
-        shadow
-        videoClass="p-3"
+      <Card 
+        img="/images/wallet.webp"
+        imgClass=" rounded-lg"
+        class="p-5 w-2/3"
+        bodyClass="mb-5"
+        isMouseTrackRecord={recordMouseMoveTrack} 
+        dataURL="http://localhost/api" 
+        intervalData={intervalData}
         hoverTransform
-      >
-        <div class="">
-          <a href="/video/1.mp4" class="mt-2">
-            <h5 class="mb-2 text-xl tracking-tight text-gray-900 hover:text-[#1a0dab] hover:cursor-pointer hover:underline">Meta stellar Yutube card</h5>
-          </a>
-          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-        </div>
-      </YutubePoster>
-    <h3 class="mt-5">Yutube poster component</h3>
-    </div>
-    <div>
-      <!--- Image post component-->
-      <ImagePoster 
-        img="/images/test.png" 
+        imgHoverTransform
+        reverse
+        >
+          <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(reverse)</h5> 
+          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+      </Card>
+      <Card 
+        class="p-5 w-full w-1/3"
+        isMouseTrackRecord={recordMouseMoveTrack} 
+        dataURL="http://localhost/api" 
+        intervalData={intervalData}
+        hoverTransform
+        >
+          <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(no image)</h5> 
+          <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
+      </Card> <YutubePoster
+      isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData}
+      yutubeURL="/video/1.mp4"
+      thumnailURL="/images/1.jpg"
+      type="video/mp4"
+      bodyClass="mt-5"
+      videoClass=""
+      class="p-5 w-1/2"
+    >
+      <div class="">
+        <a href="/video/1.mp4" class="mt-2">
+          <h5 class="mb-2 text-xl tracking-tight text-gray-900 hover:text-[#1a0dab] hover:cursor-pointer hover:underline">Meta stellar Yutube card</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+      </div>
+    </YutubePoster>
+  </div>
+  <div class="flex flex-row gap-5 max-w-6xl mt-16">
+   
+    <div class="w-1/2">
+    <NftPoster 
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData} 
-        padding="none"
-        size="lg"
-        rounded
-        hoverTransform></ImagePoster>
-      <h3  class="mt-5">Image poster component</h3>
-    </div>
-    <div>
-      <!--- NFT post component-->
-      <NftPoster 
-        isMouseTrackRecord={recordMouseMoveTrack} 
-        dataURL="http://localhost/api" 
-        intervalData={intervalData} 
         hoverTransform
-        size="lg"
-        rounded
-        shadow
+        imgHoverTransform
+        class="p-6 "
         assetAccount={assetInfo}
       >
       </NftPoster>
-      <h3  class="mt-5">Nft poster component</h3>
+      
+      <h3 class="mt-4">
+        NFT poster card
+      </h3>
+      </div>
+    <div class="w-1/2">
+      <ImagePoster 
+          img="/images/test.png" 
+          isMouseTrackRecord={recordMouseMoveTrack} 
+          dataURL="http://localhost/api" 
+          intervalData={intervalData} 
+          hoverTransform
+          class="rounded-lg"
+          imgClass="rounded-lg">
+        </ImagePoster>
+        <h3 class="mt-4">
+          Image poster card
+        </h3>
     </div>
-    <div class="">
-      <!--- Assets selector component-->
-      <AssetSelector/>
-      <h3 class="mt-5">Assets selector component</h3>
-    </div>
+  </div>
+  <div class="flex flex-row gap-5 max-w-6xl  mt-16">
   </div>
 </div>

@@ -9,24 +9,25 @@
 	let showModal = false;
 
 	export let img: string | undefined = undefined;
-  export let size: SizeType | 'none' = 'sm';
+	export let imgClass: string | undefined = undefined;
 
 	interface $$Props extends ComponentProps<Frame> {
     img?: string;
+		imgClass?:string;
     padding?: SizeType | 'none';
     size?: SizeType | 'none';
 	}
 
  	let cardClass: string;
-  $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class);
+  $: cardClass = twMerge('flex w-full', $$props.class);
 
-	let imgClass:string;
-	$:imgClass = twMerge('hover:cursor-pointer', $$props.rounded && ('rounded-lg'))
+	let imgCls:string;
+	$:imgCls = twMerge('hover:cursor-pointer', imgClass)
 
 </script>
 
 <Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
-	<img class={imgClass} src={img} alt="" />
+	<img class={imgCls} src={img} alt="" />
 </Frame>
 <Modal bind:showModal>
 	<img class="" src={img} alt="" />
