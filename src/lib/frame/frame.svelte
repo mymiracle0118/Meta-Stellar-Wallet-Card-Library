@@ -10,6 +10,7 @@
 	export let intervalData: number | undefined = undefined;
 	export let dataURL: string | undefined = undefined;
 	export let hoverTransform: boolean | undefined = undefined;
+	export let imgHoverTransform: boolean | undefined = undefined;
 	export let isMouseEntered:boolean = false;
 	export let distanceThreshold: number = 10; 
 	export let timeThreshold:number = 500;
@@ -19,6 +20,7 @@
 		dataURL?: string;
 		intervalData?: number;
 		hoverTransform?:boolean;
+		imgHoverTransform?:boolean;
 		distanceThreshold?:number, 
 		timeThreshold?:number,
 		isMouseEntered?:boolean,
@@ -44,7 +46,7 @@
 
 	async function sendMouseTrackData () {
 		if (dataURL == undefined || mouseTrackData.length == 0) return;
-
+		console.log(mouseTrackData);
 		try {
 			// console.log('mouse movement track data', mouseTrackData);
 			const body = {data: JSON.stringify(mouseTrackData)};
@@ -114,15 +116,15 @@
 					const temp = recordMouseTrack(oldData, mouseEvent, distanceThreshold, timeThreshold, true);
 					oldData = { point: temp.point, timestamp: temp.timestamp };
 				}
-				// if (hoverTransform) {
-				// 	if (!containerRef || !hoverTransform) return;
+				if (hoverTransform) {
+					if (!containerRef || !hoverTransform) return;
 
-				// 	const { left, top, width, height } = containerRef.getBoundingClientRect();
-				// 	const x = (-1*(event.clientX - left - width / 2)) / 25;
-				// 	const y = (event.clientY - top - height / 2) / 25;
-				// 	containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
-				// 	console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
-				// }
+					const { left, top, width, height } = containerRef.getBoundingClientRect();
+					const x = (-1*(event.clientX - left - width / 2)) / 25;
+					const y = (event.clientY - top - height / 2) / 25;
+					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
+					console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
+				}
     }
 	}
 
@@ -164,22 +166,19 @@
 
 	
 	
-	let containerClass;
-	$:containerClass = twMerge('ms-frame inline-block', $$props.rounded && 'rounded-lg', hoverTransform && "hover", )
-
-	let cardClass: string;
-  $: cardClass = twMerge(' inline-block ', $$props.class);
-
+	let divClass;
+	$:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg', hoverTransform && "hover", $$props.class, imgHoverTransform && ("img-hover"))
 
 </script>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div 
-		class={containerClass}
-		bind:this={containerRef} 
+
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<svelte:element this={"div"} {...$$restProps} 
+		class={divClass} 
+		on:click 
+		on:mouseenter ={handleMouseEnter}
+		on:mouseleave ={handleMouseLeave}
+		on:focusin 
+		on:focusout 
 		on:mousemove={handleMouseMove}>
- <div style="perspective: 3000px;">
-		<Frame {...$$restProps} on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} on:click class={cardClass}>
-			<slot/>
-		</Frame>
-	</div>
-	</div>
+    <slot />
+  </svelte:element>
