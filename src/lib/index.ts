@@ -1,7 +1,25 @@
 // Reexport your entry components here
-export { default as Card } from "./card/card.svelte";
-export { default as AssetSelector } from "./assetSelector/assetSelector.svelte";
-export { default as ImagePoster } from "./imagePoster/imagePoster.svelte";
-export { default as NftPoster } from "./nftPoster/nftPoster.svelte";
-export { default as YoutubePoster } from "./youtubePoster/youtubePoster.svelte";
+
+import Card from './card/card.svelte';
+import CardItem from "./card/item.svelte";
+import ImagePost from "./imagePoster/imagePoster.svelte";
+import NFTPost from './nftPoster/nftPoster.svelte';
+import YTPost from './nftPoster/nftPoster.svelte';
+import TokenPost from './tokenPoster/tokenPoster.svelte';
+import { openCanvasModal } from './CanvasModal/index.js';
 export * from "./types";
+export {
+    Card, 
+    CardItem, 
+    ImagePost, 
+    NFTPost, 
+    YTPost,
+    TokenPost,
+    openCanvasModal,
+}
+
+export type{
+    StellarAsset,
+    walletInfo,
+    DispAsset
+}
