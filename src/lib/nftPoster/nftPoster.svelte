@@ -3,23 +3,21 @@
   import { ImagePlaceholder } from 'flowbite-svelte';
   import { onMount } from 'svelte';
   import { twMerge } from 'tailwind-merge';
+
 	import Frame from "../frame/frame.svelte";
-	import type {SizeType, AssetAccount, AssetRaw, AssetMetaData} from '$lib/types.js';
-	import {sizes, baseURL} from '$lib/constants.js';
+	import type {AssetAccount, AssetRaw, AssetMetaData} from '$lib/types.js';
+	import {baseURL} from '$lib/constants.js';
 
 	let showModal = false;
 
-  export let size: SizeType | 'none' = 'sm';
   export let assetAccount: AssetAccount;
+  export let imgClass: string | undefined = undefined;
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
-    padding?: SizeType | 'none';
-    size?: SizeType | 'none';
+    imgClass?:string;
 	}
 
- 	let cardClass: string;
-  $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class);
   let assetInfo: AssetRaw;
   let assetMetadata: AssetMetaData;
 
@@ -103,15 +101,25 @@
     getMetadata(assetAccount);
 	});
 
+  let cardClass: string;
+  $: cardClass = twMerge('flex w-full', $$props.class);
+
+
+	let imgCls:string;
+	$:imgCls = twMerge('hover:cursor-pointer', imgClass)
 </script>
 
-<Frame tag="div" {...$$restProps} border shadow class={cardClass} on:click={() => (showModal = true)}>
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
   {#if assetMetadata?.image}
-  <img class="rounded-t-lg p-4" src={assetMetadata?.image} alt="product 1" />
+  <img class={imgCls} src={assetMetadata?.image} alt="product 1" />
   {:else}
-  <ImagePlaceholder imgOnly class="mt-12" />
+  <!-- <ImagePlaceholder imgOnly class="mt-12 w-full" style={{width:'100%'}} size="lg"/> -->
+ <div class="flex justify-center items-center w-full h-48 bg-gray-300 rounded dark:bg-gray-700">
+    <svg width="48" height="48" class="text-gray-200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+      <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
+    </svg>
+  </div>
   {/if}
   
-  <div class="px-5 pb-5">
   <!-- <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{token?.name + " #" + token?.id}</h5> -->
 </Frame>
