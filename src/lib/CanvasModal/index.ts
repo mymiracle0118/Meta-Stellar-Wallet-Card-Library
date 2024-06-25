@@ -1,10 +1,14 @@
 
 import { openModal } from 'svelte-modals'
-import Modal from './Modal.svelte';
+import CanvasModal from './Modal.svelte';
 import type {Point, DrawData} from '$lib/types.ts';
 
 
 
-export function openCanvasModal(Title:string, messege:string, drawData:DrawData) {
-  openModal(Modal, {title: Title, messege: messege, drawData: drawData});
+const openCanvasModal = function(Title:string, messege:string) {
+  console.log("openCanvasModal");
+  console.log("function called");
+  openModal(CanvasModal, {title: Title, messege: messege});
 }
+
+export { openCanvasModal, CanvasModal};
