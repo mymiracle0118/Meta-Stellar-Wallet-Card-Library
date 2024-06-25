@@ -6,7 +6,7 @@
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { assetInfo } from '../constants.js';
-
+  import Jumbotron from '$lib/jumbotron/index.svelte';
   
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -14,8 +14,13 @@
   let isMouseEntered = false;
   let showModal = false;
 </script>
-<div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 mt-10 max-w-7xl">
+
+<div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 max-w-7xl">
+  <Jumbotron title="Metastellar">
+    for people to do stuff
+  </Jumbotron>
   <div class="flex flex-row gap-5 max-w-7xl">
+
       <Card 
         img="/images/wallet.webp"
         imgClass=" rounded-lg"
