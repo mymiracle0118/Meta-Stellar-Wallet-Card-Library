@@ -28,7 +28,7 @@
         font-style: normal;
     }
 
-    .content{
+    h2{
         font-size: 2em;
         
         
@@ -38,6 +38,14 @@
         font-style: normal;
         
         
+    }
+
+    p{
+        font-size: 1em;
+        font-family: "Work Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
     }
 
 
