@@ -4,16 +4,23 @@
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
-
+  import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { assetInfo } from '../constants.js';
-
+  import Jumbotron from '$lib/jumbotron/index.svelte';
+  
   let recordMouseMoveTrack = true;
   let intervalData = 5;
 
   let isMouseEntered = false;
+  let showModal = false;
 </script>
-<div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 mt-10 max-w-7xl">
+
+<div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 max-w-7xl">
+  <Jumbotron title="Metastellar">
+    for people to do stuff
+  </Jumbotron>
   <div class="flex flex-row gap-5 max-w-7xl">
+
       <Card 
         img="/images/wallet.webp"
         imgClass="m-lg rounded-lg"
@@ -95,5 +102,10 @@
     </div>
   </div>
   <div class="flex flex-row gap-5 max-w-6xl  mt-16">
+    <CanvasModal bind:showModal={showModal} autoScaleHeight={true}>
+      <h1>Canvas Modal</h1>
+      <p>Canvas Modal</p>
+    </CanvasModal>
+    <button on:click={()=>showModal=true}>open modal</button>
   </div>
 </div>
