@@ -1,43 +1,40 @@
-.ms-frame{
+.ms-frame {
   cursor: pointer;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
-.ms-frame.hover:hover{
-  animation: both 3s float infinite;
-	&.img-hover img {
-  	animation: both 3s floatItem infinite;
-	}
+.ms-frame.hover:hover {
+  &.img-hover img {
+    animation: both 3s floatItem infinite;
+  }
 }
 
 @keyframes float {
-	0% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px) scale(1);
-	}
-	50% {
-		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-		transform: translatey(-5px) scale(1.01);
-
-	}
-	100% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px) scale(1);
-	}
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px) scale(1);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-5px) scale(1.01);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px) scale(1);
+  }
 }
 
 @keyframes floatItem {
-	0% {
-		transform: translatez(0px) scale(1);
-	}
-	50% {
-		box-shadow: 0 15px 10px 0px rgba(0,0,0,0.2);
-		transform: translatez(30px) scale(1.02);
-
-	}
-	100% {
-		transform: translatez(0px) scale(1);
-	}
+  0% {
+    transform: translatez(0px) scale(1);
+  }
+  50% {
+    box-shadow: 0 15px 10px 0px rgba(0, 0, 0, 0.2);
+    transform: translatez(30px) scale(1.02);
+  }
+  100% {
+    transform: translatez(0px) scale(1);
+  }
 }
-.ms-card__item.hover:hover  {
+.ms-card__item.hover:hover {
   animation: both 3s float infinite;
 }

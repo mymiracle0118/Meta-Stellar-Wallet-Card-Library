@@ -16,14 +16,10 @@
   <div class="flex flex-row gap-5 max-w-7xl">
       <Card 
         img="/images/wallet.webp"
-        imgClass=" rounded-lg"
-        bodyClass="mt-5"
-        class="p-5 w-2/3"
+        imgClass="m-lg rounded-lg"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
-        hoverTransform
-        imgHoverTransform
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
@@ -31,8 +27,6 @@
       <Card 
         img="/images/wallet.webp"
         imgClass=" rounded-lg"
-        class="p-5 w-2/3"
-        bodyClass="mb-5"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
@@ -43,8 +37,9 @@
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(reverse)</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
       </Card>
+  </div>
+  <div class="flex flex-wor gap-5 mzx-w-6xl mt-16">
       <Card 
-        class="p-5 w-full w-1/3"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
         intervalData={intervalData}
@@ -52,14 +47,12 @@
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(no image)</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
-      </Card> <YutubePoster
+      </Card> 
+      <YutubePoster
       isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData}
       yutubeURL="/video/1.mp4"
       thumnailURL="/images/1.jpg"
       type="video/mp4"
-      bodyClass="mt-5"
-      videoClass=""
-      class="p-5 w-1/2"
     >
       <div class="">
         <a href="/video/1.mp4" class="mt-2">
@@ -78,7 +71,6 @@
         intervalData={intervalData} 
         hoverTransform
         imgHoverTransform
-        class="p-6 "
         assetAccount={assetInfo}
       >
       </NftPoster>

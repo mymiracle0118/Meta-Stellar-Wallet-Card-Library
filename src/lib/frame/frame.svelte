@@ -167,18 +167,22 @@
 	
 	
 	let divClass;
-	$:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg', hoverTransform && "hover", $$props.class, imgHoverTransform && ("img-hover"))
+	// $:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg', hoverTransform && "hover", $$props.class, imgHoverTransform && ("img-hover"))
+	$:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg',  $$props.class)
 
 </script>
 
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<svelte:element this={"div"} {...$$restProps} 
-		class={divClass} 
-		on:click 
-		on:mouseenter ={handleMouseEnter}
-		on:mouseleave ={handleMouseLeave}
-		on:focusin 
-		on:focusout 
-		on:mousemove={handleMouseMove}>
-    <slot />
-  </svelte:element>
+	<div  style="perspective: 1000px;"> 
+		<svelte:element this={"div"} {...$$restProps} 
+			class={divClass} 
+			bind:this={containerRef}
+			on:click 
+			on:mouseenter ={handleMouseEnter}
+			on:mouseleave ={handleMouseLeave}
+			on:focusin 
+			on:focusout 
+			on:mousemove={handleMouseMove}>
+			<slot />
+		</svelte:element>
+	</div>
