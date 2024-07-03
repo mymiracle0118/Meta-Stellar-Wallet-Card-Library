@@ -5,18 +5,43 @@
   import { twMerge } from 'tailwind-merge';
 
 	import Frame from "../frame/frame.svelte";
-	import type {AssetAccount, AssetRaw, AssetMetaData} from '$lib/types.js';
+	import type {AssetAccount, AssetRaw, AssetMetaData, SizeType} from '$lib/types.js';
 	import {baseURL} from '$lib/constants.js';
 
 	let showModal = false;
 
   export let assetAccount: AssetAccount;
   export let imgClass: string | undefined = undefined;
+  export let padding: SizeType | 'none' = 'lg';
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
     imgClass?:string;
+    padding?: SizeType | 'none';
 	}
+
+  const paddings: Record<SizeType | 'none', string> = {
+    none: '',
+    xs: 'p-2',
+    sm: 'p-4',
+    md: 'p-4 sm:p-5',
+    lg: 'p-4 sm:p-6',
+    xl: 'p-4 sm:p-8'
+  };
+
+  const yPaddings: Record<SizeType | 'none', string> = {
+    none: '',
+    xs: 'py-2',
+    sm: 'py-4',
+    md: 'py-4 sm:py-5',
+    lg: 'py-4 sm:py-6',
+    xl: 'py-4 sm:py-8'
+  };
+
+  let innerPadding: string;
+  $: innerPadding = paddings[padding];
+  let innerYpadding: string;
+  $: innerYpadding = yPaddings[padding];
 
   let assetInfo: AssetRaw;
   let assetMetadata: AssetMetaData;
@@ -103,6 +128,7 @@
 
   let cardClass: string;
   $: cardClass = twMerge('flex w-full', $$props.class);
+  $: cardClass = twMerge('flex w-full',  $$props.class, innerPadding, $$restProps.imgHoverTransform && 'img-hover', $$restProps.hoverTransform && 'hover');
 
 
 	let imgCls:string;

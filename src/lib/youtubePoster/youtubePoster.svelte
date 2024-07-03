@@ -3,29 +3,51 @@
   import { twMerge } from 'tailwind-merge';
 
   import Frame from '$lib/frame/frame.svelte'
-	import {sizes, paddings} from '$lib/constants.js';
 	import type {SizeType} from '$lib/types.js'
   
   export let reverse: boolean = false;
   export let videoClass:string = '';
-  export let bodyClass:string = '';
+  export let padding: SizeType | 'none' = 'lg';
+  
   interface $$Props extends ComponentProps<Frame> {
     yutubeURL:string;
     thumnailURL:string;
     type:string;
     reverse?: boolean;
     videoClass?:string;
-    bodyClass?:string;
+    padding?: SizeType | 'none';
   }
+  
+  const paddings: Record<SizeType | 'none', string> = {
+    none: '',
+    xs: 'p-2',
+    sm: 'p-4',
+    md: 'p-4 sm:p-5',
+    lg: 'p-4 sm:p-6',
+    xl: 'p-4 sm:p-8'
+  };
+
+  const yPaddings: Record<SizeType | 'none', string> = {
+    none: '',
+    xs: 'py-2',
+    sm: 'py-4',
+    md: 'py-4 sm:py-5',
+    lg: 'py-4 sm:py-6',
+    xl: 'py-4 sm:py-8'
+  };
 
   export let yutubeURL:string = "";
   export let thumnailURL:string = "";
   export let type:string = "";
 
+  let innerPadding: string;
+  $: innerPadding = paddings[padding];
+  let innerYpadding: string;
+  $: innerYpadding = yPaddings[padding];
+
   let cardClass: string;
   // $: cardClass = twMerge('ms-card flex w-full', sizes[size], reverse ? 'flex-col-reverse' : 'flex-col', horizontal && (reverse ? 'md:flex-row-reverse' : 'md:flex-row'), $$restProps.href && 'hover:bg-gray-100 dark:hover:bg-gray-700',  $$props.class, $$restProps.hoverTransform && "hover");
-    $: cardClass = twMerge('flex w-full ', reverse ? 'flex-col-reverse' : 'flex-col', $$props.class);
-
+  $: cardClass = twMerge('flex w-full ', reverse ? 'flex-col-reverse' : 'flex-col', $$props.class, innerPadding);
 
 	let duration;
 	let paused = true;
@@ -113,7 +135,7 @@
       </div>
     </div>
   </div>
-  <div class={bodyClass}>
+  <div class={innerYpadding}>
     <slot/>
   </div>
 </Frame>
