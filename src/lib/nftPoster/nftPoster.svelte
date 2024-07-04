@@ -6,8 +6,7 @@
 
 	import Frame from "../frame/frame.svelte";
 	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, links, SizeType} from '$lib/types.js';
-  import {getMetadata} from '$lib/utility.ts';
-	import {baseURL} from '$lib/constants.js';
+  import {getMetadata} from '$lib/utility.js';
 
 	let showModal = false;
 
