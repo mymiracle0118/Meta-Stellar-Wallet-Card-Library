@@ -4,9 +4,11 @@
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
+  import tokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
-  import { assetInfo } from '../constants.js';
+  import { nftInfo, tokenInfo } from '../constants.js';
   import Jumbotron from '$lib/JumboTron/index.svelte';
+    import TokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
   
   let recordMouseMoveTrack = true;
   let intervalData = 5;
@@ -72,20 +74,36 @@
   <div class="flex flex-row gap-5 max-w-6xl mt-16">
    
     <div class="w-1/2">
-    <NftPoster 
-        isMouseTrackRecord={recordMouseMoveTrack} 
-        dataURL="http://localhost/api" 
-        intervalData={intervalData} 
-        hoverTransform
-        imgHoverTransform
-        assetAccount={assetInfo}
-      >
+      <NftPoster 
+          isMouseTrackRecord={recordMouseMoveTrack} 
+          dataURL="http://localhost/api" 
+          intervalData={intervalData} 
+          hoverTransform
+          imgHoverTransform
+          assetAccount={nftInfo}
+        >
       </NftPoster>
-      
+        
       <h3 class="mt-4">
         NFT poster card
       </h3>
-      </div>
+    </div>
+
+    <div class="w-1/2">
+      <TokenPoster 
+          isMouseTrackRecord={recordMouseMoveTrack} 
+          dataURL="http://localhost/api" 
+          intervalData={intervalData} 
+          hoverTransform
+          imgHoverTransform
+          assetAccount={tokenInfo}
+        >
+      </TokenPoster>
+        
+      <h3 class="mt-4">
+        Token poster card
+      </h3>
+    </div>
     <div class="w-1/2">
       <ImagePoster 
           img="/images/test.png" 
