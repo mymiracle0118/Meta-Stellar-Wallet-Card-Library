@@ -13,10 +13,12 @@
   export let assetAccount: AssetAccount;
   export let imgClass: string | undefined = undefined;
   export let padding: SizeType | 'none' = 'lg';
+  export let reverse: boolean = false;
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
     imgClass?:string;
+    reverse?: boolean;
     padding?: SizeType | 'none';
 	}
 
@@ -61,11 +63,12 @@
 
   let cardClass: string;
   $: cardClass = twMerge('flex w-full', $$props.class);
-  $: cardClass = twMerge('flex w-full',  $$props.class, innerPadding, $$restProps.imgHoverTransform && 'img-hover', $$restProps.hoverTransform && 'hover');
+  $: cardClass = twMerge('flex w-full',  $$props.class, reverse ? 'flex-col-reverse ' : 'flex-col', innerPadding, $$restProps.imgHoverTransform && 'img-hover', $$restProps.hoverTransform && 'hover');
 
 
 	let imgCls:string;
 	$:imgCls = twMerge('hover:cursor-pointer', imgClass)
+  
 </script>
 
 <Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
@@ -79,9 +82,10 @@
     </svg>
   </div>
   {/if}
-  <p>{assetMetadata?.code ? assetMetadata?.code : ""}</p>
-  <p>{assetMetadata?.name ? assetMetadata?.name : ""}</p>
-  <p>{assetMetadata?.issuer ? assetMetadata?.issuer: ""}</p>
-  
+  <div class={innerYpadding}>
+    <h3 class="whitespace-nowrap overflow-hidden text-ellipsis text-2xl font-bold ">{assetMetadata?.code ? assetMetadata?.code : ""}</h3>
+    <p class="whitespace-nowrap overflow-hidden text-ellipsis text-slate-600 ">{assetMetadata?.name ? assetMetadata?.name : ""}</p>
+    <p class="whitespace-nowrap overflow-hidden text-ellipsis my-2">{assetMetadata?.issuer ? assetMetadata?.issuer: ""}</p>
+  </div>
   <!-- <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{token?.name + " #" + token?.id}</h5> -->
 </Frame>
