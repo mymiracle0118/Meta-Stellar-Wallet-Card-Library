@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type {  ComponentProps} from 'svelte';
+  import { ImagePlaceholder } from 'flowbite-svelte';
+
   import { onMount } from 'svelte';
   import { twMerge } from 'tailwind-merge';
 	import Frame from "../frame/frame.svelte";
@@ -9,20 +11,24 @@
 
 	let showModal = false;
 
-  export let size: SizeType | 'none' = 'sm';
   export let token: NFTToken | undefined = undefined;
   export let nft_metadata: NFTMetadata | undefined = undefined;
   export let metadata_url: string;
+  export let imgClass: string |undefined = undefined;
 
 	interface $$Props extends ComponentProps<Frame> {
     token: NFTToken;
     metadata_url: string;
-    padding?: SizeType | 'none';
-    size?: SizeType | 'none';
+    imgClass?:string;
 	}
 
- 	let cardClass: string;
-  $: cardClass = twMerge('flex w-full', sizes[size], 'flex-col', $$props.class);
+
+  let cardClass: string;
+  $: cardClass = twMerge('flex w-full', $$props.class);
+
+
+	let imgCls:string;
+	$:imgCls = twMerge('hover:cursor-pointer', imgClass)
 
   async function getMetadata (metadata_url: string) {
 		if (metadata_url == undefined) return;
@@ -45,9 +51,9 @@
 
 </script>
 
-<Frame tag="div" {...$$restProps} border shadow class={cardClass} on:click={() => (showModal = true)}>
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
   {#if nft_metadata?.image_url}
-  <img class="p-8 rounded-t-lg" src={nft_metadata?.image_url} alt="product 1" />
+  <img class={imgCls} src={nft_metadata?.image_url} alt="product 1" />
   {:else}
   <ImagePlaceholder imgOnly class="mt-12" />
   {/if}

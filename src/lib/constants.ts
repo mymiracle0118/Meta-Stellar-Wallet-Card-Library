@@ -1,4 +1,4 @@
-import type { DispAsset, SizeType, NFTToken } from "$lib/types.js";
+import type { DispAsset, SizeType } from "$lib/types.js";
 
 export const xlm_display: DispAsset = {
   image:
