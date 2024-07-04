@@ -179,7 +179,7 @@ export interface links {
   toml: Toml;
 }
 
-export interface AssetExtra {
+export interface AssetStatistics {
   authorized: number;
   authorized_to_maintain_liabilities: number;
   unauthorized: number;
@@ -196,16 +196,20 @@ export interface AssetRaw {
   asset_type: string; // This asset's type. Either credit_alphanum4 or credit_alphanum12.
   asset_code: string; // This asset's code
   asset_issuer: string; // The Stellar address of this asset’s issuer.
-  accounts: AssetExtra; // The number of accounts grouped by each trustline flag state.
+  paging_token: string; // The paging token code + address + type
+  contract_id: string; // The contract id
+  num_accounts: number; // The number of accounts that have issued a trustline to this asset. If the auth_required flag for this asset's issuer is set to true, this number only includes the accounts who have both set up a trustline to the asset and have been authorized to hold the asset. This will be deprecated in Horizon v3.
+  accounts: AssetStatistics; // The number of accounts grouped by each trustline flag state.
   num_claimable_balances: number; // The current number of claimable_balances for this asset.
   num_contracts: number; // The current number of Soroban contracts holding this asset.
   num_liquidity_pools: number; // The current number of liquidity pools holding this asset.
-  balances: AssetExtra; // The number of units issued for this asset grouped by each trustline flag state.
+  balances: AssetStatistics; // The number of units issued for this asset grouped by each trustline flag state.
+  num_archived_contracts: number;
   claimable_balances_amount: string; // The number of units for this asset held by all claimable balances.
   contracts_amount: string; // The number of units for this asset held by all Soroban contracts.
   liquidity_pools_amount: string; // The number of units for this asset held by all liquidity pools.
+  archived_contracts_amount: string;
   amount: string; // The number of authorized units issued for this asset. This will be deprecated in Horizon v3.
-  num_accounts: number; // The number of accounts that have issued a trustline to this asset. If the auth_required flag for this asset's issuer is set to true, this number only includes the accounts who have both set up a trustline to the asset and have been authorized to hold the asset. This will be deprecated in Horizon v3.
   flags: AssetFlag;
   _links: links;
 }
