@@ -6,7 +6,7 @@
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { assetInfo } from '../constants.js';
-  import Jumbotron from '$lib/jumbotron/index.svelte';
+  import Jumbotron from '$lib/JumboTron/index.svelte';
   
   let recordMouseMoveTrack = true;
   let intervalData = 5;
