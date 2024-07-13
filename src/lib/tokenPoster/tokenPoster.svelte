@@ -12,6 +12,7 @@
 
   export let assetAccount: AssetAccount;
   export let imgClass: string | undefined = undefined;
+  export let baseURL: string;
   export let padding: SizeType | 'none' = 'lg';
   export let reverse: boolean = false;
 
@@ -20,6 +21,7 @@
     imgClass?:string;
     reverse?: boolean;
     padding?: SizeType | 'none';
+    baseURL: string;
 	}
 
   const paddings: Record<SizeType | 'none', string> = {
@@ -49,7 +51,7 @@
   let assetMetadata: AssetMetaData;
 
   async function getAssetData(assetAccount: AssetAccount) {
-    const data = await getMetadata(assetAccount);
+    const data = await getMetadata(baseURL, assetAccount);
     if(data?.result) {
       assetInfo = data.data?.asset_raw as AssetRaw;
       assetMetadata = data.data?.metadata as AssetMetaData;
