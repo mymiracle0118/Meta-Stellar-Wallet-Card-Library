@@ -8,10 +8,12 @@
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { nftInfo, tokenInfo } from '../constants.js';
   import Jumbotron from '$lib/JumboTron/index.svelte';
-    import TokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
+  import TokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
   
   let recordMouseMoveTrack = true;
   let intervalData = 5;
+  let testnetBaseURL = "https://horizon-testnet.stellar.org/";
+  let mainnetBaseURL = "https://horizon.stellar.org/";
 
   let isMouseEntered = false;
   let showModal = false;
@@ -27,7 +29,7 @@
         img="/images/wallet.webp"
         imgClass="m-lg rounded-lg"
         isMouseTrackRecord={recordMouseMoveTrack} 
-        dataURL="http://localhost/api" 
+        dataURL="http://localhost/api"
         intervalData={intervalData}
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
@@ -76,7 +78,8 @@
     <div class="w-1/2">
       <NftPoster 
           isMouseTrackRecord={recordMouseMoveTrack} 
-          dataURL="http://localhost/api" 
+          dataURL="http://localhost/api"
+          baseURL = {testnetBaseURL}
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
@@ -92,7 +95,8 @@
     <div class="w-1/2">
       <TokenPoster 
           isMouseTrackRecord={recordMouseMoveTrack} 
-          dataURL="http://localhost/api" 
+          baseURL = {mainnetBaseURL}
+          dataURL="http://localhost/api"
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
