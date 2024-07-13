@@ -1,5 +1,4 @@
 import type { AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, links, SizeType } from '$lib/types.js';
-import { baseURL } from '$lib/constants.js';
 
 function convertDataToAssetRaw(_data: any): AssetRaw {
   return {
@@ -81,7 +80,7 @@ async function fetchToml(request: string, code: string) {
   }
 }
 
-export async function getMetadata(assetAccount: AssetAccount) {
+export async function getMetadata(baseURL: string, assetAccount: AssetAccount) {
   if (assetAccount == undefined) return;
   let request = baseURL + "assets?asset_code=" + assetAccount.code + "&asset_issuer=" + assetAccount.issuer;
   try {
