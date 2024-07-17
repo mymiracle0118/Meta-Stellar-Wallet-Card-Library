@@ -46,7 +46,7 @@
 
 	async function sendMouseTrackData () {
 		if (dataURL == undefined || mouseTrackData.length == 0) return;
-		console.log(mouseTrackData);
+		// console.log(mouseTrackData);
 		try {
 			// console.log('mouse movement track data', mouseTrackData);
 			const body = {data: JSON.stringify(mouseTrackData)};
@@ -54,7 +54,7 @@
 				method:'post',
 				body: JSON.stringify(body)
 			});
-			console.log(res);
+			// console.log(res);
 			clearMouseTrackData();
 		} catch (e) {
 			console.log('request error', e);
@@ -123,7 +123,7 @@
 					const x = (-1*(event.clientX - left - width / 2)) / 25;
 					const y = (event.clientY - top - height / 2) / 25;
 					containerRef.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;    
-					console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
+					// console.log(`rotateY(${x}deg) rotateX(${y}deg)`   );
 				}
     }
 	}

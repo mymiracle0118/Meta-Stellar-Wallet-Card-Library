@@ -57,7 +57,7 @@ async function fetchToml(request: string, code: string) {
         }));
       // console.log(assetMetadataArray);
       const assetMetadata = assetMetadataArray.filter(entry => !code || entry.code?.includes(code));
-      console.log("assetMetadata", assetMetadata);
+      // console.log("assetMetadata", assetMetadata);
       if (assetMetadata == undefined || assetMetadata[0] == undefined) {
         return {
           result: false,
@@ -97,7 +97,7 @@ export async function getMetadata(baseURL: string, assetAccount: AssetAccount) {
 
       const data: AssetRaw = convertDataToAssetRaw(result._embedded.records[0]);
       const metaDataInfo = await fetchToml(data?._links?.toml?.href, assetAccount?.code);
-      console.log("metadata info", metaDataInfo);
+      // console.log("metadata info", metaDataInfo);
       if (metaDataInfo?.result) {
         const metadata: AssetMetaData = convertDataToAssetMetadata(metaDataInfo.data);
         return {
