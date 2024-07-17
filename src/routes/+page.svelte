@@ -17,6 +17,20 @@
 
   let isMouseEntered = false;
   let showModal = false;
+  let tokenValFromComp:string = '';
+  const _getInfo = (val:string) =>{
+      tokenValFromComp = val;
+  }
+
+  function getTokenAssetInfo(data: any): void {
+    console.log("token asset info", data.assetInfo);
+    console.log("token metadata info", data.assetMetadata);
+  }
+
+  function getNFTAssetInfo(data: any): void {
+    console.log("nft asset info", data.assetInfo);
+    console.log("nft meta data info", data.assetMetadata);
+  }
 </script>
 
 <div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 max-w-7xl">
@@ -77,13 +91,14 @@
    
     <div class="w-1/2">
       <NftPoster 
-          isMouseTrackRecord={recordMouseMoveTrack} 
+          isMouseTrackRecord={false} 
           dataURL="http://localhost/api"
           baseURL = {testnetBaseURL}
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
           assetAccount={nftInfo}
+          getNFTAssetInfo={getNFTAssetInfo}
         >
       </NftPoster>
         
@@ -94,13 +109,15 @@
 
     <div class="w-1/2">
       <TokenPoster 
-          isMouseTrackRecord={recordMouseMoveTrack} 
+          isMouseTrackRecord={false} 
           baseURL = {mainnetBaseURL}
           dataURL="http://localhost/api"
           intervalData={intervalData} 
           hoverTransform
+          balance={0.117}
           imgHoverTransform
           assetAccount={tokenInfo}
+          getTokenAssetInfo={getTokenAssetInfo}
         >
       </TokenPoster>
         

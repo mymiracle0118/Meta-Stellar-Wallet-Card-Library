@@ -5,7 +5,7 @@
   import { twMerge } from 'tailwind-merge';
 
 	import Frame from "../frame/frame.svelte";
-	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, links, SizeType} from '$lib/types.js';
+	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, AssetData, links, SizeType} from '$lib/types.js';
   import {getMetadata} from '$lib/utility.js';
 
 	let showModal = false;
@@ -14,12 +14,14 @@
   export let imgClass: string | undefined = undefined;
   export let baseURL: string;
   export let padding: SizeType | 'none' = 'lg';
+  export let getNFTAssetInfo: (data: AssetData) => void;
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
     imgClass?:string;
     padding?: SizeType | 'none';
     baseURL: string;
+    getNFTAssetInfo:(data: AssetData) => void;
 	}
 
   const paddings: Record<SizeType | 'none', string> = {
@@ -55,6 +57,15 @@
       assetMetadata = data.data?.metadata as AssetMetaData;
     }
   }
+
+  const sendAssetInfo = () => {
+    // console.log("nft send");
+    const data: AssetData = {
+      assetInfo: assetInfo,
+      assetMetadata: assetMetadata
+    }
+    getNFTAssetInfo(data)
+  }
   
   onMount(() => {
     getNFTData(assetAccount);
@@ -69,7 +80,7 @@
 	$:imgCls = twMerge('hover:cursor-pointer', imgClass)
 </script>
 
-<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => {sendAssetInfo();}}>
   {#if assetMetadata?.image}
   <img class={imgCls} src={assetMetadata?.image} alt="product 1" />
   {:else}

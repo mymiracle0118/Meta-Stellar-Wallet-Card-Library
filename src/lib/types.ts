@@ -224,6 +224,11 @@ export interface AssetMetaData {
   image: string | undefined;
 }
 
+export interface AssetData {
+  assetInfo: AssetRaw;
+  assetMetadata: AssetMetaData;
+}
+
 // FT Token
 export interface AssetAccount {
   code: string; // This asset's code

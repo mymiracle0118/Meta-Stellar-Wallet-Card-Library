@@ -11,8 +11,8 @@ import type { AssetAccount } from "$lib/types.js";
 // }
 
 export const nftInfo: AssetAccount = {
-  code: "MSNFT",
-  issuer: "GATRMB7RI7EJDWNWZUJ3E75MTMU5UYWLUJS6IRVR3BFLL3YF5WGAGBUA"
+  code: "nmt",
+  issuer: "GDSZ24D4II53QDUQDWJMCOYDE7YCLWH3XUAE662GS46RCZF3E7KTRR5E"
 }
 
 export const tokenInfo: AssetAccount = {
