@@ -8,18 +8,18 @@
 	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, AssetData, links, SizeType} from '$lib/types.js';
   import {getMetadata} from '$lib/utility.js';
 
-	let showModal = false;
-
   export let assetAccount: AssetAccount;
   export let imgClass: string | undefined = undefined;
   export let baseURL: string;
   export let padding: SizeType | 'none' = 'lg';
   export let balance: number;
   export let getTokenAssetInfo: (data: AssetData) => void;
+  export let reverse: boolean = false;
 
 	interface $$Props extends ComponentProps<Frame> {
     assetAccount: AssetAccount;
     imgClass?:string;
+    reverse?: boolean;
     padding?: SizeType | 'none';
     baseURL: string;
     balance: number;
@@ -80,6 +80,7 @@
 
 	let imgCls:string;
 	$:imgCls = twMerge('hover:cursor-pointer w-10 h-10', imgClass)
+  
 </script>
 
 <Frame tag="div" {...$$restProps} class={cardClass} on:click={() => {sendAssetInfo();}}>

@@ -4,7 +4,6 @@
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
-  import tokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { nftInfo, tokenInfo } from '../constants.js';
   import Jumbotron from '$lib/JumboTron/index.svelte';
@@ -38,13 +37,13 @@
     for people to do stuff
   </Jumbotron>
   <div class="flex flex-row gap-5 max-w-7xl">
-
       <Card 
         img="/images/wallet.webp"
         imgClass="m-lg rounded-lg"
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api"
         intervalData={intervalData}
+        hoverTransform
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
@@ -64,6 +63,7 @@
       </Card>
   </div>
   <div class="flex flex-wor gap-5 mzx-w-6xl mt-16">
+    <div>
       <Card 
         isMouseTrackRecord={recordMouseMoveTrack} 
         dataURL="http://localhost/api" 
@@ -73,6 +73,20 @@
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(no image)</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
       </Card> 
+      
+        <ImagePoster 
+            img="/images/test.png" 
+            isMouseTrackRecord={recordMouseMoveTrack} 
+            dataURL="http://localhost/api" 
+            intervalData={intervalData} 
+            hoverTransform
+            class="rounded-lg"
+            imgClass="rounded-lg">
+          </ImagePoster>
+          <h3 class="mt-4">
+            Image poster card
+          </h3>
+      </div>
       <YutubePoster
       isMouseTrackRecord={recordMouseMoveTrack} dataURL="http://localhost/api" intervalData={intervalData}
       yutubeURL="/video/1.mp4"
@@ -87,8 +101,7 @@
       </div>
     </YutubePoster>
   </div>
-  <div class="flex flex-row gap-5 max-w-6xl mt-16">
-   
+  <div class="flex flex-row gap-5 max-w-7xl mt-16">
     <div class="w-1/2">
       <NftPoster 
           isMouseTrackRecord={false} 
@@ -106,7 +119,6 @@
         NFT poster card
       </h3>
     </div>
-
     <div class="w-1/2">
       <TokenPoster 
           isMouseTrackRecord={false} 
@@ -120,24 +132,9 @@
           getTokenAssetInfo={getTokenAssetInfo}
         >
       </TokenPoster>
-        
       <h3 class="mt-4">
         Token poster card
       </h3>
-    </div>
-    <div class="w-1/2">
-      <ImagePoster 
-          img="/images/test.png" 
-          isMouseTrackRecord={recordMouseMoveTrack} 
-          dataURL="http://localhost/api" 
-          intervalData={intervalData} 
-          hoverTransform
-          class="rounded-lg"
-          imgClass="rounded-lg">
-        </ImagePoster>
-        <h3 class="mt-4">
-          Image poster card
-        </h3>
     </div>
   </div>
   <div class="flex flex-row gap-5 max-w-6xl  mt-16">
