@@ -5,14 +5,15 @@
   import { twMerge } from 'tailwind-merge';
 
 	import Frame from "../frame/frame.svelte";
-	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, links, SizeType} from '$lib/types.js';
+	import type {AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, AssetData, links, SizeType} from '$lib/types.js';
   import {getMetadata} from '$lib/utility.js';
-
-	let showModal = false;
 
   export let assetAccount: AssetAccount;
   export let imgClass: string | undefined = undefined;
+  export let baseURL: string;
   export let padding: SizeType | 'none' = 'lg';
+  export let balance: number;
+  export let getTokenAssetInfo: (data: AssetData) => void;
   export let reverse: boolean = false;
 
 	interface $$Props extends ComponentProps<Frame> {
@@ -20,6 +21,9 @@
     imgClass?:string;
     reverse?: boolean;
     padding?: SizeType | 'none';
+    baseURL: string;
+    balance: number;
+    getTokenAssetInfo:(data: AssetData) => void;
 	}
 
   const paddings: Record<SizeType | 'none', string> = {
@@ -38,11 +42,11 @@
   let assetMetadata: AssetMetaData;
 
   async function getAssetData(assetAccount: AssetAccount) {
-    const data = await getMetadata(assetAccount);
+    const data = await getMetadata(baseURL, assetAccount);
     if(data?.result) {
       assetInfo = data.data?.asset_raw as AssetRaw;
       assetMetadata = data.data?.metadata as AssetMetaData;
-      console.log("token card metadata", assetMetadata);
+      // console.log("token card metadata", assetMetadata);
     }
   }
   function shortenString(str:string, maxLength:number): string {
@@ -62,21 +66,30 @@
     }
   }
 
+
+  const sendAssetInfo = () => {
+    const data: AssetData = {
+      assetInfo: assetInfo,
+      assetMetadata: assetMetadata
+    }
+    getTokenAssetInfo(data)
+  }
+  
   onMount(() => {
     getAssetData(assetAccount);
 	});
 
   let cardClass: string;
   $: cardClass = twMerge('flex w-full', $$props.class);
-  $: cardClass = twMerge('flex w-full',  'flex-row gap-5 ', innerPadding, $$restProps.imgHoverTransform && 'img-hover', $$restProps.hoverTransform && 'hover');
+  $: cardClass = twMerge('flex w-full gap-5',  $$props.class, innerPadding, $$restProps.imgHoverTransform && 'img-hover', $$restProps.hoverTransform && 'hover');
 
 
 	let imgCls:string;
-	$:imgCls = twMerge('hover:cursor-pointer w-20 h-20 mt-1', imgClass)
+	$:imgCls = twMerge('hover:cursor-pointer w-10 h-10', imgClass)
   
 </script>
 
-<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => (showModal = true)}>
+<Frame tag="div" {...$$restProps} class={cardClass} on:click={() => {sendAssetInfo();}}>
   {#if assetMetadata?.image}
     <img class={imgCls} src={assetMetadata?.image} alt="product 1" width={100} />
   {:else}
@@ -86,10 +99,20 @@
     </svg>
   </div> -->
   {/if}
-  <div class="">
-    <h3 class=" font-bold ">{assetMetadata?.code ? assetMetadata?.code : ""}</h3>
-    <p class=" text-slate-600 ">{assetMetadata?.name ? assetMetadata?.name : ""}</p>
-    <p class=" my-2">{assetMetadata?.issuer ? shortenString(assetMetadata?.issuer, 20): ""}</p>
+
+  <div class="flex justify-between w-full mt-2">
+    {#if assetMetadata?.code}
+    <p>{assetMetadata?.code}</p>
+    {:else if assetMetadata?.code}
+    <p>{assetInfo?.asset_code}</p>
+    {:else}
+    <p>{""}</p>
+    {/if}
+
+    <p>{balance}</p>
   </div>
+  <!-- <p>{assetMetadata?.name ? assetMetadata?.name : assetInfo?.asset_code}</p>
+  <p>{assetMetadata?.issuer ? assetMetadata?.issuer: assetInfo?.asset_issuer}</p> -->
+  
   <!-- <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{token?.name + " #" + token?.id}</h5> -->
 </Frame>

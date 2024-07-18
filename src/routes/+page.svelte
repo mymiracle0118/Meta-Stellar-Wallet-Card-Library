@@ -4,7 +4,6 @@
   import ImagePoster from '$lib/imagePoster/imagePoster.svelte';
   import AssetSelector from '$lib/assetSelector/assetSelector.svelte';
   import NftPoster from '$lib/nftPoster/nftPoster.svelte';
-  import tokenPoster from '$lib/tokenPoster/tokenPoster.svelte';
   import CanvasModal from '$lib/CanvasModal/Modal.svelte';
   import { nftInfo, tokenInfo } from '../constants.js';
   import Jumbotron from '$lib/JumboTron/index.svelte';
@@ -12,9 +11,25 @@
   
   let recordMouseMoveTrack = true;
   let intervalData = 5;
+  let testnetBaseURL = "https://horizon-testnet.stellar.org/";
+  let mainnetBaseURL = "https://horizon.stellar.org/";
 
   let isMouseEntered = false;
   let showModal = false;
+  let tokenValFromComp:string = '';
+  const _getInfo = (val:string) =>{
+      tokenValFromComp = val;
+  }
+
+  function getTokenAssetInfo(data: any): void {
+    console.log("token asset info", data.assetInfo);
+    console.log("token metadata info", data.assetMetadata);
+  }
+
+  function getNFTAssetInfo(data: any): void {
+    console.log("nft asset info", data.assetInfo);
+    console.log("nft meta data info", data.assetMetadata);
+  }
 </script>
 
 <div class="w-full mx-auto p-6 flex justify-center flex-col gap-2 max-w-7xl">
@@ -26,7 +41,7 @@
         img="/images/wallet.webp"
         imgClass="m-lg rounded-lg"
         isMouseTrackRecord={recordMouseMoveTrack} 
-        dataURL="http://localhost/api" 
+        dataURL="http://localhost/api"
         intervalData={intervalData}
         hoverTransform
         >
@@ -89,12 +104,14 @@
   <div class="flex flex-row gap-5 max-w-7xl mt-16">
     <div class="w-1/2">
       <NftPoster 
-          isMouseTrackRecord={recordMouseMoveTrack} 
-          dataURL="http://localhost/api" 
+          isMouseTrackRecord={false} 
+          dataURL="http://localhost/api"
+          baseURL = {testnetBaseURL}
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
           assetAccount={nftInfo}
+          getNFTAssetInfo={getNFTAssetInfo}
         >
       </NftPoster>
         
@@ -104,11 +121,15 @@
     </div>
     <div class="w-1/2">
       <TokenPoster 
-          isMouseTrackRecord={recordMouseMoveTrack} 
-          dataURL="http://localhost/api" 
+          isMouseTrackRecord={false} 
+          baseURL = {mainnetBaseURL}
+          dataURL="http://localhost/api"
           intervalData={intervalData} 
           hoverTransform
+          balance={0.117}
+          imgHoverTransform
           assetAccount={tokenInfo}
+          getTokenAssetInfo={getTokenAssetInfo}
         >
       </TokenPoster>
       <h3 class="mt-4">

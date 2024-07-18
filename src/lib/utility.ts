@@ -1,5 +1,4 @@
 import type { AssetAccount, AssetRaw, AssetStatistics, AssetFlag, AssetMetaData, links, SizeType } from '$lib/types.js';
-import { baseURL } from '$lib/constants.js';
 
 function convertDataToAssetRaw(_data: any): AssetRaw {
   return {
@@ -58,7 +57,7 @@ async function fetchToml(request: string, code: string) {
         }));
       // console.log(assetMetadataArray);
       const assetMetadata = assetMetadataArray.filter(entry => !code || entry.code?.includes(code));
-      console.log("assetMetadata", assetMetadata);
+      // console.log("assetMetadata", assetMetadata);
       if (assetMetadata == undefined || assetMetadata[0] == undefined) {
         return {
           result: false,
@@ -81,7 +80,7 @@ async function fetchToml(request: string, code: string) {
   }
 }
 
-export async function getMetadata(assetAccount: AssetAccount) {
+export async function getMetadata(baseURL: string, assetAccount: AssetAccount) {
   if (assetAccount == undefined) return;
   let request = baseURL + "assets?asset_code=" + assetAccount.code + "&asset_issuer=" + assetAccount.issuer;
   try {
@@ -98,7 +97,7 @@ export async function getMetadata(assetAccount: AssetAccount) {
 
       const data: AssetRaw = convertDataToAssetRaw(result._embedded.records[0]);
       const metaDataInfo = await fetchToml(data?._links?.toml?.href, assetAccount?.code);
-      console.log("metadata info", metaDataInfo);
+      // console.log("metadata info", metaDataInfo);
       if (metaDataInfo?.result) {
         const metadata: AssetMetaData = convertDataToAssetMetadata(metaDataInfo.data);
         return {
