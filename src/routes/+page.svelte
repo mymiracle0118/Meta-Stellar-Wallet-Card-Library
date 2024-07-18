@@ -134,7 +134,7 @@
     <div class="w-1/2">
       <TokenPoster 
           isMouseTrackRecord={false} 
-          baseURL = {mainnetBaseURL}
+          baseURL = {testnetBaseURL}
           dataURL="http://localhost/api"
           intervalData={intervalData} 
           hoverTransform
