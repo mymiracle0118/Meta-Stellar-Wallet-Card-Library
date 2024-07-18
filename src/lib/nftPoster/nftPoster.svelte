@@ -64,6 +64,7 @@
       assetInfo: assetInfo,
       assetMetadata: assetMetadata
     }
+    console.log("data", data);
     getNFTAssetInfo(data)
   }
   

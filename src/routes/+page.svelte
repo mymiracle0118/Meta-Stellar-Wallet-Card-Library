@@ -116,7 +116,7 @@
       <NftPoster 
           isMouseTrackRecord={false} 
           dataURL="http://localhost/api"
-          baseURL = {testnetBaseURL}
+          baseURL = {mainnetBaseURL}
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
