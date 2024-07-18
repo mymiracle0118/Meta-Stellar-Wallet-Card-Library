@@ -168,7 +168,7 @@
 	
 	let divClass;
 	// $:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg', hoverTransform && "hover", $$props.class, imgHoverTransform && ("img-hover"))
-	$:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg',  $$props.class)
+	$:divClass = twMerge('ms-frame ', $$props.rounded && 'rounded-lg',  $$props.class, $$props.shadow && 'shadow')
 
 </script>
 

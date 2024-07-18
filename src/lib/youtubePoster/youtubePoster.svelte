@@ -86,9 +86,9 @@
       (videoElement as any).msRequestFullscreen();
     }
   }
-  onMount(()=>{
-    console.log($$restProps)
-  })
+  // onMount(()=>{
+  //   console.log($$restProps)
+  // })
 </script>
 
 <Frame {...$$restProps} class={cardClass}>

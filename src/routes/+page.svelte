@@ -44,6 +44,8 @@
         dataURL="http://localhost/api"
         intervalData={intervalData}
         hoverTransform
+        shadow
+        rounded
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
@@ -57,6 +59,8 @@
         hoverTransform
         imgHoverTransform
         reverse
+        shadow
+        rounded
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(reverse)</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
@@ -69,6 +73,8 @@
         dataURL="http://localhost/api" 
         intervalData={intervalData}
         hoverTransform
+        shadow
+        rounded
         >
           <h5 class="mb-2 text-xl  tracking-tight text-gray-900 ">Meta stellar card(no image)</h5> 
           <p class="mb-3 font-normal text-gray-700 leading-tight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium praesentium ullam alias aut quod cum perferendis maiores.</p>
@@ -81,7 +87,9 @@
             intervalData={intervalData} 
             hoverTransform
             class="rounded-lg"
-            imgClass="rounded-lg">
+            imgClass="rounded-lg"
+            shadow
+            rounded>
           </ImagePoster>
           <h3 class="mt-4">
             Image poster card
@@ -92,6 +100,8 @@
       yutubeURL="/video/1.mp4"
       thumnailURL="/images/1.jpg"
       type="video/mp4"
+      shadow
+      rounded
     >
       <div class="">
         <a href="/video/1.mp4" class="mt-2">
@@ -106,12 +116,14 @@
       <NftPoster 
           isMouseTrackRecord={false} 
           dataURL="http://localhost/api"
-          baseURL = {testnetBaseURL}
+          baseURL = {mainnetBaseURL}
           intervalData={intervalData} 
           hoverTransform
           imgHoverTransform
           assetAccount={nftInfo}
           getNFTAssetInfo={getNFTAssetInfo}
+          shadow
+          rounded
         >
       </NftPoster>
         
@@ -130,6 +142,8 @@
           imgHoverTransform
           assetAccount={tokenInfo}
           getTokenAssetInfo={getTokenAssetInfo}
+          shadow
+          rounded
         >
       </TokenPoster>
       <h3 class="mt-4">
